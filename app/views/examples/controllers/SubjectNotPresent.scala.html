@@ -1,0 +1,35 @@
+<div class="row-fluid" id="controller-SubjectNotPresent">
+    <div class="span10">
+        <h3 class="subsection">SubjectNotPresent</h3>
+
+        <p>The counterpart to SubjectPresent.  This constraint requires that a user isn't present (i.e. no-one is logged in).</p>
+    </div>
+</div>
+<div class="row-fluid">
+    <div class="span5 columnHeader">Specification</div>
+    <div class="span5 columnHeader">Result</div>
+</div>
+<div class="row-fluid">
+    <div class="span5">
+                    <pre>
+@@SubjectNotPresent
+public static Result subjectNotPresent_loggedIn() {
+    return ok(accessOk.render());
+}</pre>
+    </div>
+    <div class="span5">
+        <iframe src="@routes.SubjectController.subjectNotPresent_loggedIn"></iframe>
+    </div>
+</div>
+<div class="row-fluid">
+    <div class="span5">
+                    <pre>
+@@SubjectNotPresent(handler = NoUserDeadboltHandler.class)
+public static Result subjectNotPresent() {
+    return ok(accessOk.render());
+}</pre>
+    </div>
+    <div class="span5">
+        <iframe src="@routes.SubjectController.subjectNotPresent"></iframe>
+    </div>
+</div>

@@ -1,0 +1,84 @@
+@import be.objectify.deadbolt.java.views.html._
+@import be.objectify.deadbolt.core.utils.TemplateUtils._
+
+<div class="row-fluid" id="template-subjectNotPresent">
+    <div class="span10">
+        <h3 class="subsection">subjectNotPresent</h3>
+
+        <p>The counterpart to subjectPresent.  This constraint requires that a user isn't present (i.e. no-one is logged in).</p>
+    </div>
+</div>
+<div class="row-fluid">
+    <div class="span3 columnHeader">Unprotected content</div>
+    <div class="span5 columnHeader">Specification</div>
+    <div class="span2 columnHeader">Result</div>
+</div>
+
+<div class="row-fluid">
+    <div class="span3">
+        <pre>This content should NOT be visible</pre>
+    </div>
+    <div class="span5">
+        <pre>
+@@subjectNotPresent() {
+  This content should NOT be visible
+}</pre>
+    </div>
+    <div class="span2">
+        @subjectNotPresent() {
+        This content should NOT be visible
+        }
+    </div>
+</div>
+
+<div class="row-fluid">
+    <div class="span3">
+        <pre>This content should be visible</pre>
+    </div>
+    <div class="span5">
+        <pre>
+@@subjectNotPresent(new security.NoUserDeadboltHandler) {
+  This content should be visible
+}</pre>
+    </div>
+    <div class="span2">
+        @subjectNotPresent(new security.NoUserDeadboltHandler()) {
+        This content should be visible
+        }
+    </div>
+</div>
+
+<div class="row-fluid">
+    <div class="span3">
+        <pre>This content should NOT be visible</pre>
+    </div>
+    <div class="span5">
+        <pre>
+@@subjectNotPresentOr() {
+  This content should NOT be visible
+}{Sorry, no access}</pre>
+    </div>
+    <div class="span2">
+        @subjectNotPresentOr() {
+        This content should NOT be visible
+        }{Sorry, no access}
+    </div>
+</div>
+
+
+<div class="row-fluid">
+    <div class="span3">
+        <pre>This content should be visible</pre>
+    </div>
+    <div class="span5">
+        <pre>
+@@subjectNotPresentOr(new security.NoUserDeadboltHandler) {
+  This content should be visible
+}{Sorry, no access}</pre>
+    </div>
+    <div class="span2">
+        @subjectNotPresentOr(new security.NoUserDeadboltHandler()) {
+        This content should be visible
+        }{Sorry, no access}
+    </div>
+</div>

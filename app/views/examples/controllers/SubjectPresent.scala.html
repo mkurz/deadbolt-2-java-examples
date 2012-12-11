@@ -1,0 +1,35 @@
+<div class="row-fluid" id="controller-SubjectPresent">
+    <div class="span10">
+        <h3 class="subsection">SubjectPresent</h3>
+
+        <p>This is one of the simplest constraints in Deadbolt.  It simply requires that a user be present (i.e. logged in).</p>
+    </div>
+</div>
+<div class="row-fluid">
+    <div class="span5 columnHeader">Specification</div>
+    <div class="span5 columnHeader">Result</div>
+</div>
+<div class="row-fluid">
+    <div class="span5">
+                    <pre>
+@@SubjectPresent
+public static Result subjectPresent() {
+    return ok(accessOk.render());
+}</pre>
+    </div>
+    <div class="span5">
+        <iframe src="@routes.SubjectController.subjectPresent"></iframe>
+    </div>
+</div>
+<div class="row-fluid">
+    <div class="span5">
+                    <pre>
+@@SubjectPresent(handler = NoUserDeadboltHandler.class)
+public static Result subjectPresent_notLoggedIn() {
+    return ok(accessOk.render());
+}</pre>
+    </div>
+    <div class="span5">
+        <iframe src="@routes.SubjectController.subjectPresent_notLoggedIn"></iframe>
+    </div>
+</div>
