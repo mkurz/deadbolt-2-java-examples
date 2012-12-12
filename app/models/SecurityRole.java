@@ -28,10 +28,12 @@ import javax.persistence.Id;
 public class SecurityRole extends Model implements Role
 {
     @Id
+    public Long id;
+
     public String roleName;
 
-    public static final Finder<String, SecurityRole> find = new Finder<String, SecurityRole>(String.class,
-                                                                                             SecurityRole.class);
+    public static final Finder<Long, SecurityRole> find = new Finder<Long, SecurityRole>(Long.class,
+                                                                                         SecurityRole.class);
 
     public String getRoleName()
     {

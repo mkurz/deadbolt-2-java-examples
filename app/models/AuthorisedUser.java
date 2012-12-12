@@ -32,6 +32,8 @@ import java.util.List;
 public class AuthorisedUser extends Model implements Subject
 {
     @Id
+    public Long id;
+
     public String userName;
 
     @ManyToMany
@@ -40,8 +42,8 @@ public class AuthorisedUser extends Model implements Subject
     @ManyToMany
     public List<UserPermission> permissions;
 
-    public static final Finder<String, AuthorisedUser> find = new Finder<String, AuthorisedUser>(String.class,
-                                                                             AuthorisedUser.class);
+    public static final Finder<Long, AuthorisedUser> find = new Finder<Long, AuthorisedUser>(Long.class,
+                                                                                             AuthorisedUser.class);
 
     public List<? extends Role> getRoles()
     {
