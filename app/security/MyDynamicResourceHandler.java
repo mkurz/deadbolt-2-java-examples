@@ -20,7 +20,7 @@ import be.objectify.deadbolt.core.models.Subject;
 import be.objectify.deadbolt.java.DeadboltHandler;
 import be.objectify.deadbolt.java.DynamicResourceHandler;
 import be.objectify.deadbolt.core.models.Permission;
-import models.User;
+import models.AuthorisedUser;
 import play.Logger;
 import play.mvc.Http;
 
@@ -71,7 +71,7 @@ public class MyDynamicResourceHandler implements DynamicResourceHandler
                                  String[] requestedNames = queryStrings.get("userName");
                                  allowed = requestedNames != null
                                            && requestedNames.length == 1
-                                           && ((User) subject).userName.equals(requestedNames[0]);
+                                           && ((AuthorisedUser) subject).userName.equals(requestedNames[0]);
                              }
 
                              return allowed;

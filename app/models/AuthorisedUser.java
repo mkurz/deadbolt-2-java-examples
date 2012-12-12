@@ -29,7 +29,7 @@ import java.util.List;
  * @author Steve Chaloner (steve@objectify.be)
  */
 @Entity
-public class User extends Model implements Subject
+public class AuthorisedUser extends Model implements Subject
 {
     @Id
     public String userName;
@@ -40,8 +40,8 @@ public class User extends Model implements Subject
     @ManyToMany
     public List<UserPermission> permissions;
 
-    public static final Finder<String, User> find = new Finder<String, User>(String.class,
-                                                                             User.class);
+    public static final Finder<String, AuthorisedUser> find = new Finder<String, AuthorisedUser>(String.class,
+                                                                             AuthorisedUser.class);
 
     public List<? extends Role> getRoles()
     {
@@ -53,7 +53,7 @@ public class User extends Model implements Subject
         return permissions;
     }
     
-    public static User findByUserName(String userName)
+    public static AuthorisedUser findByUserName(String userName)
     {
         return find.where()
                    .eq("userName",

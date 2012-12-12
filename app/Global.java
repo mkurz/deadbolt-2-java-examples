@@ -15,8 +15,8 @@
  */
 
 import com.avaje.ebean.Ebean;
+import models.AuthorisedUser;
 import models.SecurityRole;
-import models.User;
 import models.UserPermission;
 import play.Application;
 import play.GlobalSettings;
@@ -49,9 +49,9 @@ public class Global extends GlobalSettings
             permission.save();
         }
         
-        if (User.find.findRowCount() == 0)
+        if (AuthorisedUser.find.findRowCount() == 0)
         {
-            User user = new User();
+            AuthorisedUser user = new AuthorisedUser();
             user.userName = "steve";
             user.roles = new ArrayList<SecurityRole>();
             user.roles.add(SecurityRole.findByRoleName("foo"));

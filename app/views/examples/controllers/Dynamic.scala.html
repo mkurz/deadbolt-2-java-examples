@@ -83,7 +83,7 @@ public boolean isAllowed(String name,
         String[] requestedNames = queryStrings.get("userName");
         allowed = requestedNames != null
                   && requestedNames.length == 1
-                  && ((User)subject).userName.equals(requestedNames[0]);
+                  && ((AuthorisedUser)subject).userName.equals(requestedNames[0]);
     }
     return allowed;
 }</pre>
@@ -119,7 +119,7 @@ public boolean isAllowed(String name,
         String[] requestedNames = queryStrings.get("userName");
         allowed = requestedNames != null
                   && requestedNames.length == 1
-                  && ((User)subject).userName.equals(requestedNames[0]);
+                  && ((AuthorisedUser)subject).userName.equals(requestedNames[0]);
     }
     return allowed;
 }</pre>
