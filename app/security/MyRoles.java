@@ -27,7 +27,7 @@ public enum MyRoles implements Role
     hurdy;
 
     @Override
-    public String getRoleName()
+    public String getName()
     {
         return name();
     }

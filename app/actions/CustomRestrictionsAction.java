@@ -46,7 +46,7 @@ public class CustomRestrictionsAction extends Action<CustomRestrictions>
                     String[] group = new String[value.length];
                     for (int i = 0; i < value.length; i++)
                     {
-                        group[i] = value[i].getRoleName();
+                        group[i] = value[i].getName();
                     }
                     roleGroups.add(group);
                 }

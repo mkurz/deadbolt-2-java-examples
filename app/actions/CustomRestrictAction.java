@@ -42,7 +42,7 @@ public class CustomRestrictAction extends Action<CustomRestrict>
                 List<String> roleNames = new ArrayList<String>();
                 for (MyRoles role : outerConfig.value())
                 {
-                    roleNames.add(role.getRoleName());
+                    roleNames.add(role.getName());
                 }
                 return roleNames.toArray(new String[roleNames.size()]);
             }

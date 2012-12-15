@@ -30,21 +30,21 @@ public class SecurityRole extends Model implements Role
     @Id
     public Long id;
 
-    public String roleName;
+    public String name;
 
     public static final Finder<Long, SecurityRole> find = new Finder<Long, SecurityRole>(Long.class,
                                                                                          SecurityRole.class);
 
-    public String getRoleName()
+    public String getName()
     {
-        return roleName;
+        return name;
     }
 
-    public static SecurityRole findByRoleName(String roleName)
+    public static SecurityRole findByName(String name)
     {
         return find.where()
-                   .eq("roleName",
-                       roleName)
+                   .eq("name",
+                       name)
                    .findUnique();
     }
 }

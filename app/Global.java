@@ -34,10 +34,10 @@ public class Global extends GlobalSettings
     {
         if (SecurityRole.find.findRowCount() == 0)
         {
-            for (String roleName : Arrays.asList("foo", "bar", "hurdy", "gurdy"))
+            for (String name : Arrays.asList("foo", "bar", "hurdy", "gurdy"))
             {
                 SecurityRole role = new SecurityRole();
-                role.roleName = roleName;
+                role.name = name;
                 role.save();
             }
         }
@@ -54,8 +54,8 @@ public class Global extends GlobalSettings
             AuthorisedUser user = new AuthorisedUser();
             user.userName = "steve";
             user.roles = new ArrayList<SecurityRole>();
-            user.roles.add(SecurityRole.findByRoleName("foo"));
-            user.roles.add(SecurityRole.findByRoleName("bar"));
+            user.roles.add(SecurityRole.findByName("foo"));
+            user.roles.add(SecurityRole.findByName("bar"));
             user.permissions = new ArrayList<UserPermission>();
             user.permissions.add(UserPermission.findByValue("printers.edit"));
 
