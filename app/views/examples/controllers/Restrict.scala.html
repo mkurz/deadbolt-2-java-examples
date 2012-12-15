@@ -30,8 +30,8 @@ public class RestrictController extends Controller</pre>
 <div class="row-fluid">
     <div class="span5">
         <pre>
-@@Restrict({"foo", "bar"})
-public static Result restrictTwo() {
+@Restrict("foo")
+public static Result restrictOne() {
     return ok(accessOk.render());
 }</pre>
     </div>
