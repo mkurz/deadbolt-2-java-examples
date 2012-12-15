@@ -20,4 +20,3 @@ test-result
 server.pid
 *.iml
 *.eml
-conf/evolutions
