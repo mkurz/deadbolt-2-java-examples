@@ -1,3 +1,6 @@
+# --- Created by Ebean DDL
+# To stop Ebean DDL generation, remove this comment and start using Evolutions
+
 # --- !Ups
 
 create table authorised_user (
@@ -14,7 +17,7 @@ create table security_role (
 
 create table user_permission (
   id                        bigint not null,
-  value                     varchar(255),
+  permission_value          varchar(255),
   constraint pk_user_permission primary key (id))
 ;
 
