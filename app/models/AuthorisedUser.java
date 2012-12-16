@@ -45,16 +45,24 @@ public class AuthorisedUser extends Model implements Subject
     public static final Finder<Long, AuthorisedUser> find = new Finder<Long, AuthorisedUser>(Long.class,
                                                                                              AuthorisedUser.class);
 
+    @Override
     public List<? extends Role> getRoles()
     {
         return roles;
     }
-    
+
+    @Override
     public List<? extends Permission> getPermissions()
     {
         return permissions;
     }
-    
+
+    @Override
+    public String getIdentifier()
+    {
+        return userName;
+    }
+
     public static AuthorisedUser findByUserName(String userName)
     {
         return find.where()
