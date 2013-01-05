@@ -33,20 +33,26 @@ public class CustomRestrictAction extends Action<CustomRestrict>
     public Result call(Http.Context context) throws Throwable
     {
         final CustomRestrict outerConfig = configuration;
-        RestrictAction restrictAction = new RestrictAction(configuration.config(),
-                                                           this.delegate)
+        RestrictAction restrictionsAction = new RestrictAction(configuration.config(),
+                                                               this.delegate)
         {
             @Override
-            public String[] getRoleNames()
+            public List<String[]> getRoleGroups()
             {
-                List<String> roleNames = new ArrayList<String>();
-                for (MyRoles role : outerConfig.value())
+                List<String[]> roleGroups = new ArrayList<String[]>();
+                for (RoleGroup roleGroup : outerConfig.value())
                 {
-                    roleNames.add(role.getName());
+                    MyRoles[] value = roleGroup.value();
+                    String[] group = new String[value.length];
+                    for (int i = 0; i < value.length; i++)
+                    {
+                        group[i] = value[i].getName();
+                    }
+                    roleGroups.add(group);
                 }
-                return roleNames.toArray(new String[roleNames.size()]);
+                return roleGroups;
             }
         };
-        return restrictAction.call(context);
+        return restrictionsAction.call(context);
     }
 }

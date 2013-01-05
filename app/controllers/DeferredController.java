@@ -16,14 +16,7 @@
 package controllers;
 
 import actions.UpdateContext;
-import be.objectify.deadbolt.java.actions.And;
-import be.objectify.deadbolt.java.actions.Pattern;
-import be.objectify.deadbolt.java.actions.DeferredDeadbolt;
-import be.objectify.deadbolt.java.actions.Dynamic;
-import be.objectify.deadbolt.java.actions.Restrict;
-import be.objectify.deadbolt.java.actions.Restrictions;
-import be.objectify.deadbolt.java.actions.SubjectNotPresent;
-import be.objectify.deadbolt.java.actions.SubjectPresent;
+import be.objectify.deadbolt.java.actions.*;
 import play.mvc.Controller;
 import play.mvc.Result;
 import views.html.accessOk;
@@ -35,13 +28,13 @@ import views.html.accessOk;
 @DeferredDeadbolt
 public class DeferredController extends Controller
 {
-    @Restrict(value="foo", deferred=true)
+    @Restrict(value=@Group("foo"), deferred=true)
     public static Result deferredRestrict()
     {
         return ok(accessOk.render());
     }
 
-    @Restrictions(value={@And({"foo", "bar"})}, deferred=true)
+    @Restrict(value=@Group({"foo", "bar"}), deferred=true)
     public static Result deferredRestrictions()
     {
         return ok(accessOk.render());

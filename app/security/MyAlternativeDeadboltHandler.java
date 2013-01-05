@@ -47,8 +47,8 @@ public class MyAlternativeDeadboltHandler extends AbstractDeadboltHandler
     }
 
     @Override
-    public Result onAccessFailure(Http.Context context,
-                                  String content)
+    public Result onAuthFailure(Http.Context context,
+                                String content)
     {
         // you can return any result from here - forbidden, etc
         return ok(accessFailed.render());

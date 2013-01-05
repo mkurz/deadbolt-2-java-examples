@@ -15,6 +15,7 @@
  */
 package controllers;
 
+import be.objectify.deadbolt.java.actions.Group;
 import be.objectify.deadbolt.java.actions.Restrict;
 import play.mvc.Controller;
 import play.mvc.Result;
@@ -26,7 +27,7 @@ import views.html.accessOk;
  */
 public class EdgeCaseController extends Controller
 {
-    @Restrict(value = "causeFailure", handler= BuggyDeadboltHandler.class)
+    @Restrict(value = @Group("causeFailure"), handler= BuggyDeadboltHandler.class)
     public static Result index()
     {
         return ok(accessOk.render());

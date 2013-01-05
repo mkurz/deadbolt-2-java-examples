@@ -47,9 +47,9 @@ public class BuggyDeadboltHandler extends AbstractDeadboltHandler
     }
 
     @Override
-    public Result onAccessFailure(Http.Context context,
-                                  String content)
+    public Result onAuthFailure(Http.Context context,
+                                String content)
     {
-        throw new RuntimeException("An exception occurred in onAccessFailure");
+        throw new RuntimeException("An exception occurred in onAuthFailure");
     }
 }

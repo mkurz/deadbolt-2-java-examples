@@ -16,9 +16,7 @@
 package actions;
 
 import be.objectify.deadbolt.java.actions.Restrict;
-import be.objectify.deadbolt.java.actions.RestrictAction;
 import play.mvc.With;
-import security.MyRoles;
 
 import java.lang.annotation.Documented;
 import java.lang.annotation.ElementType;
@@ -37,7 +35,7 @@ import java.lang.annotation.Target;
 @Inherited
 public @interface CustomRestrict
 {
-    MyRoles[] value();
+    RoleGroup[] value();
 
     Restrict config();
 }

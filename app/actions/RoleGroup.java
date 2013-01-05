@@ -32,5 +32,7 @@ public @interface RoleGroup
      *
      * @return the role names
      */
-    MyRoles[] value();
+    MyRoles[] value() default {};
+
+    MyRoles[] not() default {};
 }

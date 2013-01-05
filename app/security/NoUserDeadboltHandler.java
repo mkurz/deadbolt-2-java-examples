@@ -37,7 +37,8 @@ public class NoUserDeadboltHandler extends AbstractDeadboltHandler
         return null;
     }
 
-    public Result onAccessFailure(Http.Context context, String content)
+    public Result onAuthFailure(Http.Context context,
+                                String content)
     {
         return ok(accessFailed.render());
     }

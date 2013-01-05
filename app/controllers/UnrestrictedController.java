@@ -15,18 +15,18 @@
  */
 package controllers;
 
+import be.objectify.deadbolt.java.actions.Group;
 import be.objectify.deadbolt.java.actions.Restrict;
 import be.objectify.deadbolt.java.actions.Unrestricted;
 import play.mvc.Controller;
 import play.mvc.Result;
-
 import views.html.accessOk;
 
 /**
  *
  * @author Steve Chaloner (steve@objectify.be)
  */
-@Restrict("hurdy")
+@Restrict(@Group("hurdy"))
 public class UnrestrictedController extends Controller
 {
     public static Result index()

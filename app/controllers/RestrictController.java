@@ -16,17 +16,19 @@
 package controllers;
 
 import actions.CustomRestrict;
+import actions.RoleGroup;
+import be.objectify.deadbolt.java.actions.Group;
 import be.objectify.deadbolt.java.actions.Restrict;
 import play.mvc.Controller;
 import play.mvc.Result;
-
 import security.MyRoles;
 import views.html.accessOk;
 
 /**
  * @author Steve Chaloner (steve@objectify.be)
  */
-@Restrict({"foo", "bar"})
+@Restrict({@Group("foo"),
+           @Group("bar")})
 public class RestrictController extends Controller
 {
     public static Result index()
@@ -34,37 +36,48 @@ public class RestrictController extends Controller
         return ok(accessOk.render());
     }
 
-    @Restrict("foo")
+    @Restrict({@Group({"foo", "bar"})})
     public static Result restrictOne()
     {
         return ok(accessOk.render());
     }
 
-    @Restrict({"foo", "bar"})
+    @Restrict({@Group({"hurdy", "gurdy"}), @Group("foo")})
     public static Result restrictTwo()
     {
         return ok(accessOk.render());
     }
 
-    @Restrict({"foo", "!bar"})
+    @Restrict({@Group("foo"), @Group("!bar")})
     public static Result restrictThree()
     {
         return ok(accessOk.render());
     }
 
-    @Restrict({"hurdy"})
+    @Restrict(@Group({"hurdy", "foo"}))
     public static Result restrictFour()
     {
         return ok(accessOk.render());
     }
 
-    @CustomRestrict(value = {MyRoles.foo, MyRoles.bar}, config = @Restrict(""))
+    @Restrict(@Group({"foo", "!bar"}))
+    public static Result restrictFive()
+    {
+        return ok(accessOk.render());
+    }
+
+
+    @CustomRestrict(value = { @RoleGroup({MyRoles.foo, MyRoles.bar}),
+                                  @RoleGroup(MyRoles.hurdy)},
+                        config = @Restrict({}))
     public static Result customRestrictOne()
     {
         return ok(accessOk.render());
     }
 
-    @CustomRestrict(value = MyRoles.hurdy, config = @Restrict(""))
+    @CustomRestrict(value = { @RoleGroup({MyRoles.hurdy, MyRoles.foo}),
+                                  @RoleGroup({MyRoles.hurdy, MyRoles.bar})},
+                        config = @Restrict({}))
     public static Result customRestrictTwo()
     {
         return ok(accessOk.render());

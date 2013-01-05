@@ -13,7 +13,7 @@
 <div class="row-fluid">
     <div class="span5">
         <pre>
-@@Restrict("hurdy")
+@@Restrictions(@@Group("hurdy")
 public class UnrestrictedController extends Controller {
 
     public static Result index() {
@@ -29,7 +29,7 @@ public class UnrestrictedController extends Controller {
 <div class="row-fluid">
     <div class="span5">
         <pre>
-@@Restrict("hurdy")
+@@Restrictions(@@Group("hurdy"))
 public class UnrestrictedController extends Controller {
 
     @@Unrestricted
