@@ -42,25 +42,29 @@ create sequence user_permission_seq;
 
 
 
-alter table authorised_user_security_role add constraint fk_authorised_user_security_r_01 foreign key (authorised_user_id) references authorised_user (id);
+alter table authorised_user_security_role add constraint fk_authorised_user_security_r_01 foreign key (authorised_user_id) references authorised_user (id) on delete restrict on update restrict;
 
-alter table authorised_user_security_role add constraint fk_authorised_user_security_r_02 foreign key (security_role_id) references security_role (id);
+alter table authorised_user_security_role add constraint fk_authorised_user_security_r_02 foreign key (security_role_id) references security_role (id) on delete restrict on update restrict;
 
-alter table authorised_user_user_permission add constraint fk_authorised_user_user_permi_01 foreign key (authorised_user_id) references authorised_user (id);
+alter table authorised_user_user_permission add constraint fk_authorised_user_user_permi_01 foreign key (authorised_user_id) references authorised_user (id) on delete restrict on update restrict;
 
-alter table authorised_user_user_permission add constraint fk_authorised_user_user_permi_02 foreign key (user_permission_id) references user_permission (id);
+alter table authorised_user_user_permission add constraint fk_authorised_user_user_permi_02 foreign key (user_permission_id) references user_permission (id) on delete restrict on update restrict;
 
 # --- !Downs
 
-drop table if exists authorised_user cascade;
+SET REFERENTIAL_INTEGRITY FALSE;
 
-drop table if exists authorised_user_security_role cascade;
+drop table if exists authorised_user;
 
-drop table if exists authorised_user_user_permission cascade;
+drop table if exists authorised_user_security_role;
 
-drop table if exists security_role cascade;
+drop table if exists authorised_user_user_permission;
 
-drop table if exists user_permission cascade;
+drop table if exists security_role;
+
+drop table if exists user_permission;
+
+SET REFERENTIAL_INTEGRITY TRUE;
 
 drop sequence if exists authorised_user_seq;
 
