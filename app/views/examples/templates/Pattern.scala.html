@@ -22,7 +22,7 @@
     </div>
     <div class="span5">
         <pre>
-@@pattern(handler, "printers.edit") {
+@@pattern("printers.edit") {
   This content should be visible
 }</pre>
     </div>
@@ -39,7 +39,7 @@
     </div>
     <div class="span5">
         <pre>
-@@pattern(handler, "printers.foo") {
+@@pattern("printers.foo") {
   This content should not visible
 }</pre>
     </div>
@@ -56,7 +56,7 @@
     </div>
     <div class="span5">
         <pre>
-@@pattern(handler, "(.)*\\.edit", PatternType.REGEX) {
+@@pattern("(.)*\\.edit", PatternType.REGEX) {
   This content should be visible
 }</pre>
     </div>
@@ -73,7 +73,7 @@
     </div>
     <div class="span5">
         <pre>
-@@pattern(handler, "(.)*\\.foo", PatternType.REGEX) {
+@@pattern("(.)*\\.foo", PatternType.REGEX) {
   This content should NOT be visible
 }</pre>
     </div>
