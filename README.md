@@ -1,4 +1,4 @@
-deadbolt-2-scala-examples
+deadbolt-2-java-examples
 =========================
 
 Example usages of Deadbolt 2's Java API.  Deadbolt 2 is an authorisation module for Play 2.
