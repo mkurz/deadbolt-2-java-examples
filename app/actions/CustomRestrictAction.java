@@ -16,9 +16,10 @@
 package actions;
 
 import be.objectify.deadbolt.java.actions.RestrictAction;
+import play.libs.F;
 import play.mvc.Action;
 import play.mvc.Http;
-import play.mvc.Result;
+import play.mvc.SimpleResult;
 import security.MyRoles;
 
 import java.util.ArrayList;
@@ -30,7 +31,7 @@ import java.util.List;
 public class CustomRestrictAction extends Action<CustomRestrict>
 {
     @Override
-    public Result call(Http.Context context) throws Throwable
+    public F.Promise<SimpleResult> call(Http.Context context) throws Throwable
     {
         final CustomRestrict outerConfig = configuration;
         RestrictAction restrictionsAction = new RestrictAction(configuration.config(),

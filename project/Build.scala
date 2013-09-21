@@ -5,12 +5,12 @@ import play.Project._
 object ApplicationBuild extends Build {
 
     val appName         = "deadbolt-2-usage-java"
-    val appVersion      = "2.1-RC2"
+    val appVersion      = "2.2-RC1"
 
     val appDependencies = Seq(
       javaCore,
       javaEbean,
-      "be.objectify" %% "deadbolt-java" % "2.1-RC2",
+      "be.objectify" %% "deadbolt-java" % "2.2-RC1",
       "postgresql" % "postgresql" % "9.1-901-1.jdbc4"
     )
 

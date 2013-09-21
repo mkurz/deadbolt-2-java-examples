@@ -15,9 +15,10 @@
  */
 package actions;
 
+import play.libs.F;
 import play.mvc.Action;
 import play.mvc.Http;
-import play.mvc.Result;
+import play.mvc.SimpleResult;
 
 /**
  * @author Steve Chaloner (steve@objectify.be)
@@ -25,7 +26,7 @@ import play.mvc.Result;
 public class UpdateContextAction extends Action<UpdateContext>
 {
     @Override
-    public Result call(Http.Context context) throws Throwable
+    public F.Promise<SimpleResult> call(Http.Context context) throws Throwable
     {
         context.args.put("UpdateContext",
                          configuration.value());
