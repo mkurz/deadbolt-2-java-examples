@@ -38,6 +38,12 @@ public class SubjectController extends Controller
         return ok(accessOk.render());
     }
 
+    @SubjectPresent(handlerKey = "foo")
+    public static Result subjectPresent_namedHandler()
+    {
+        return ok(accessOk.render());
+    }
+
     @SubjectPresent(handler = NoUserDeadboltHandler.class)
     public static Result subjectPresent_notLoggedIn()
     {
@@ -46,6 +52,12 @@ public class SubjectController extends Controller
 
     @SubjectNotPresent(handler = NoUserDeadboltHandler.class)
     public static Result subjectNotPresent()
+    {
+        return ok(accessOk.render());
+    }
+
+    @SubjectNotPresent(handlerKey = "foo")
+    public static Result subjectNotPresent_namedHandler()
     {
         return ok(accessOk.render());
     }

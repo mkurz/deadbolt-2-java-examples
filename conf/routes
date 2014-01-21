@@ -19,9 +19,11 @@ GET     /viewProfile                    controllers.DynamicRestrictionsControlle
 GET     /editPrinter                    controllers.PatternController.editPrinter
 GET     /detonatePrinter                controllers.PatternController.detonatePrinter
 GET     /editAnythingRegex              controllers.PatternController.editPrinterRegex
-GET     /rhp_in                         controllers.SubjectController.subjectPresent
+GET     /rhp_in                         controllers.SubjectController.subjectPresent_namedHandler
+GET     /rhp_in_named                   controllers.SubjectController.subjectPresent
 GET     /rhp_out                        controllers.SubjectController.subjectPresent_notLoggedIn
 GET     /rhnp_out                       controllers.SubjectController.subjectNotPresent
+GET     /rhnp_out_named                 controllers.SubjectController.subjectNotPresent_namedHandler
 GET     /rhnp_in                        controllers.SubjectController.subjectNotPresent_loggedIn
 GET     /bug                            controllers.EdgeCaseController.index
 GET     /deferredRestrict               controllers.DeferredController.deferredRestrict
