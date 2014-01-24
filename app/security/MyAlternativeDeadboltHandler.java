@@ -33,7 +33,7 @@ public class MyAlternativeDeadboltHandler extends AbstractDeadboltHandler
     {
         // returning null means that everything is OK.  Return a real result if you want a redirect to a login page or
         // somewhere else
-        return null;
+        return F.Promise.pure(null);
     }
 
     public Subject getSubject(Http.Context context)
