@@ -21,7 +21,7 @@ import be.objectify.deadbolt.java.DynamicResourceHandler;
 import models.AuthorisedUser;
 import play.libs.F;
 import play.mvc.Http;
-import play.mvc.SimpleResult;
+import play.mvc.Result;
 import views.html.accessFailed;
 
 /**
@@ -29,7 +29,7 @@ import views.html.accessFailed;
  */
 public class MyDeadboltHandler extends AbstractDeadboltHandler
 {
-    public F.Promise<SimpleResult> beforeAuthCheck(Http.Context context)
+    public F.Promise<Result> beforeAuthCheck(Http.Context context)
     {
         // returning null means that everything is OK.  Return a real result if you want a redirect to a login page or
         // somewhere else
@@ -48,14 +48,14 @@ public class MyDeadboltHandler extends AbstractDeadboltHandler
     }
 
     @Override
-    public F.Promise<SimpleResult> onAuthFailure(Http.Context context,
+    public F.Promise<Result> onAuthFailure(Http.Context context,
                                                  String content)
     {
         // you can return any result from here - forbidden, etc
-        return F.Promise.promise(new F.Function0<SimpleResult>()
+        return F.Promise.promise(new F.Function0<Result>()
         {
             @Override
-            public SimpleResult apply() throws Throwable {
+            public Result apply() throws Throwable {
                 return ok(accessFailed.render());
             }
         });

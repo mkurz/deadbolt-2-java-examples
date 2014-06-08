@@ -21,7 +21,7 @@ import be.objectify.deadbolt.java.DynamicResourceHandler;
 import models.AuthorisedUser;
 import play.libs.F;
 import play.mvc.Http;
-import play.mvc.SimpleResult;
+import play.mvc.Result;
 
 /**
  *
@@ -29,7 +29,7 @@ import play.mvc.SimpleResult;
  */
 public class BuggyDeadboltHandler extends AbstractDeadboltHandler
 {
-    public F.Promise<SimpleResult> beforeAuthCheck(Http.Context context)
+    public F.Promise<Result> beforeAuthCheck(Http.Context context)
     {
         // returning null means that everything is OK.  Return a real result if you want a redirect to a login page or
         // somewhere else
@@ -48,8 +48,8 @@ public class BuggyDeadboltHandler extends AbstractDeadboltHandler
     }
 
     @Override
-    public F.Promise<SimpleResult> onAuthFailure(Http.Context context,
-                                                 String content)
+    public F.Promise<Result> onAuthFailure(Http.Context context,
+                                           String content)
     {
         throw new RuntimeException("An exception occurred in onAuthFailure");
     }

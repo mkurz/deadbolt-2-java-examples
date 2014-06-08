@@ -20,7 +20,7 @@ import be.objectify.deadbolt.java.AbstractDeadboltHandler;
 import be.objectify.deadbolt.java.DynamicResourceHandler;
 import play.libs.F;
 import play.mvc.Http;
-import play.mvc.SimpleResult;
+import play.mvc.Result;
 import views.html.accessFailed;
 
 /**
@@ -28,7 +28,7 @@ import views.html.accessFailed;
  */
 public class NoUserDeadboltHandler extends AbstractDeadboltHandler
 {
-    public F.Promise<SimpleResult> beforeAuthCheck(Http.Context context)
+    public F.Promise<Result> beforeAuthCheck(Http.Context context)
     {
         return null;
     }
@@ -38,13 +38,13 @@ public class NoUserDeadboltHandler extends AbstractDeadboltHandler
         return null;
     }
 
-    public F.Promise<SimpleResult> onAuthFailure(Http.Context context,
+    public F.Promise<Result> onAuthFailure(Http.Context context,
                                                  String content)
     {
-        return F.Promise.promise(new F.Function0<SimpleResult>()
+        return F.Promise.promise(new F.Function0<Result>()
         {
             @Override
-            public SimpleResult apply() throws Throwable {
+            public Result apply() throws Throwable {
                 return ok(accessFailed.render());
             }
         });
