@@ -1,6 +1,6 @@
 name := "deadbolt-2-usage-java"
 
-version := "2.3.0-RC1"
+version := "2.3.2"
 
 lazy val root = (project in file(".")).enablePlugins(PlayJava)
 
@@ -10,7 +10,7 @@ organization := "be.objectify"
 
 libraryDependencies ++= Seq(
   javaEbean,
-  "be.objectify" %% "deadbolt-java" % "2.3.0-RC1",
+  "be.objectify" %% "deadbolt-java" % "2.3.2",
   "postgresql" % "postgresql" % "9.1-901-1.jdbc4"
 )
 

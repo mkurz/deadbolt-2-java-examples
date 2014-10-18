@@ -33,9 +33,9 @@ public class NoUserDeadboltHandler extends AbstractDeadboltHandler
         return null;
     }
 
-    public Subject getSubject(Http.Context context)
+    public F.Promise<Subject> getSubject(Http.Context context)
     {
-        return null;
+        return F.Promise.pure(null);
     }
 
     public F.Promise<Result> onAuthFailure(Http.Context context,

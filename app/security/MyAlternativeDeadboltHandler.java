@@ -36,10 +36,16 @@ public class MyAlternativeDeadboltHandler extends AbstractDeadboltHandler
         return F.Promise.pure(null);
     }
 
-    public Subject getSubject(Http.Context context)
+    public F.Promise<Subject> getSubject(Http.Context context)
     {
         // in a real application, the user name would probably be in the session following a login process
-        return AuthorisedUser.findByUserName("steve");
+        return F.Promise.promise(new F.Function0<Subject>()
+        {
+            @Override
+            public Subject apply() throws Throwable {
+                return AuthorisedUser.findByUserName("steve");
+            }
+        });
     }
 
     public DynamicResourceHandler getDynamicResourceHandler(Http.Context context)
