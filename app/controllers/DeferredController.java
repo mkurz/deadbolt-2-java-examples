@@ -17,6 +17,7 @@ package controllers;
 
 import actions.UpdateContext;
 import be.objectify.deadbolt.java.actions.*;
+import play.libs.F;
 import play.mvc.Controller;
 import play.mvc.Result;
 import views.html.accessOk;
@@ -29,38 +30,38 @@ import views.html.accessOk;
 public class DeferredController extends Controller
 {
     @Restrict(value=@Group("foo"), deferred=true)
-    public static Result deferredRestrict()
+    public static F.Promise<Result> deferredRestrict()
     {
-        return ok(accessOk.render());
+        return F.Promise.promise(() -> ok(accessOk.render()));
     }
 
     @Restrict(value=@Group({"foo", "bar"}), deferred=true)
-    public static Result deferredRestrictions()
+    public static F.Promise<Result> deferredRestrictions()
     {
-        return ok(accessOk.render());
+        return F.Promise.promise(() -> ok(accessOk.render()));
     }
 
     @Pattern(value = "printers.detonate", deferred=true)
-    public static Result deferredPattern()
+    public static F.Promise<Result> deferredPattern()
     {
-        return ok(accessOk.render());
+        return F.Promise.promise(() -> ok(accessOk.render()));
     }
 
     @Dynamic(value="pureLuck", deferred=true)
-    public static Result deferredDynamic()
+    public static F.Promise<Result> deferredDynamic()
     {
-        return ok(accessOk.render());
+        return F.Promise.promise(() -> ok(accessOk.render()));
     }
 
     @SubjectPresent(deferred=true)
-    public static Result deferredSubjectPresent()
+    public static F.Promise<Result> deferredSubjectPresent()
     {
-        return ok(accessOk.render());
+        return F.Promise.promise(() -> ok(accessOk.render()));
     }
 
     @SubjectNotPresent(deferred=true)
-    public static Result deferredSubjectNotPresent()
+    public static F.Promise<Result> deferredSubjectNotPresent()
     {
-        return ok(accessOk.render());
+        return F.Promise.promise(() -> ok(accessOk.render()));
     }
 }

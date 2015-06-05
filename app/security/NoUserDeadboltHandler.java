@@ -23,35 +23,31 @@ import play.mvc.Http;
 import play.mvc.Result;
 import views.html.accessFailed;
 
+import java.util.Optional;
+
 /**
  * @author Steve Chaloner (steve@objectify.be)
  */
 public class NoUserDeadboltHandler extends AbstractDeadboltHandler
 {
-    public F.Promise<Result> beforeAuthCheck(Http.Context context)
+    public F.Promise<Optional<Result>> beforeAuthCheck(Http.Context context)
     {
         return null;
     }
 
-    public F.Promise<Subject> getSubject(Http.Context context)
+    public F.Promise<Optional<Subject>> getSubject(Http.Context context)
     {
-        return F.Promise.pure(null);
+        return F.Promise.promise(Optional::empty);
     }
 
     public F.Promise<Result> onAuthFailure(Http.Context context,
                                                  String content)
     {
-        return F.Promise.promise(new F.Function0<Result>()
-        {
-            @Override
-            public Result apply() throws Throwable {
-                return ok(accessFailed.render());
-            }
-        });
+        return F.Promise.promise(() -> ok(accessFailed.render()));
     }
 
-    public DynamicResourceHandler getDynamicResourceHandler(Http.Context context)
+    public F.Promise<Optional<DynamicResourceHandler>> getDynamicResourceHandler(Http.Context context)
     {
-        return new MyAlternativeDynamicResourceHandler();
+        return F.Promise.promise(() -> Optional.of(new MyAlternativeDynamicResourceHandler()));
     }
 }

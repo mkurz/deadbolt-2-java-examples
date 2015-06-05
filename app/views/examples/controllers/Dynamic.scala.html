@@ -38,7 +38,7 @@ public boolean isAllowed(String name,
 <div class="row-fluid">
     <div class="span4">
         <pre>
-@@Dynamic(value = "pureLuck", handler = MyAlternativeDeadboltHandler.class)
+@@Dynamic(value = "pureLuck", handlerKey ="altHandler")
 public static Result noWayJose() {
     return ok(accessOk.render());
 }</pre>
@@ -60,7 +60,7 @@ public boolean checkPermission(String permissionValue,
 <div class="row-fluid">
     <div class="span4">
         <pre>
-@@Dynamic(value = "pureLuck", handler = MyAlternativeDeadboltHandler.class)
+@@Dynamic(value = "pureLuck", handlerKey ="altHandler")
 public static Result noWayJose() {
     return ok(accessOk.render());
 }</pre>

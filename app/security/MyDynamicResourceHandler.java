@@ -17,10 +17,8 @@ package security;
 
 import be.objectify.deadbolt.core.DeadboltAnalyzer;
 import be.objectify.deadbolt.core.models.Permission;
-import be.objectify.deadbolt.core.models.Subject;
 import be.objectify.deadbolt.java.DeadboltHandler;
 import be.objectify.deadbolt.java.DynamicResourceHandler;
-import be.objectify.deadbolt.java.utils.PluginUtils;
 import play.Logger;
 import play.libs.F;
 import play.mvc.Http;
@@ -29,108 +27,110 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.TimeUnit;
+import java.util.Optional;
 
 /**
  * @author Steve Chaloner (steve@objectify.be)
  */
 public class MyDynamicResourceHandler implements DynamicResourceHandler
 {
-    private static final Map<String, DynamicResourceHandler> HANDLERS = new HashMap<String, DynamicResourceHandler>();
+    private static final Map<String, Optional<DynamicResourceHandler>> HANDLERS = new HashMap<>();
+
+    private static final DynamicResourceHandler DENY = new DynamicResourceHandler()
+    {
+        @Override
+        public F.Promise<Boolean> isAllowed(String s, String s1, DeadboltHandler deadboltHandler, Http.Context context)
+        {
+            return F.Promise.pure(false);
+        }
+
+        @Override
+        public F.Promise<Boolean> checkPermission(String s, DeadboltHandler deadboltHandler, Http.Context context)
+        {
+            return F.Promise.pure(false);
+        }
+    };
 
     static
     {
         HANDLERS.put("pureLuck",
-                     new AbstractDynamicResourceHandler()
+                     Optional.of(new AbstractDynamicResourceHandler()
                      {
-                         public boolean isAllowed(String name, 
-                                                  String meta, 
-                                                  DeadboltHandler deadboltHandler,
-                                                  Http.Context context)
+                         public F.Promise<Boolean> isAllowed(final String name,
+                                                             final String meta,
+                                                             final DeadboltHandler deadboltHandler,
+                                                             final Http.Context context)
                          {
-                             return System.currentTimeMillis() % 2 == 0;
+                             return F.Promise.promise(() -> System.currentTimeMillis() % 2 == 0);
                          }
-                     });
+                     }));
         HANDLERS.put("viewProfile",
-                     new AbstractDynamicResourceHandler()
+                     Optional.of(new AbstractDynamicResourceHandler()
                      {
-                         public boolean isAllowed(final String name,
-                                                  final String meta,
-                                                  final DeadboltHandler deadboltHandler,
-                                                  final Http.Context context)
+                         public F.Promise<Boolean> isAllowed(final String name,
+                                                             final String meta,
+                                                             final DeadboltHandler deadboltHandler,
+                                                             final Http.Context context)
                          {
                              return deadboltHandler.getSubject(context)
-                                                   .map(new F.Function<Subject, Boolean>() {
-                                                       @Override
-                                                       public Boolean apply(Subject subject) throws Throwable {
-                                                           boolean allowed;
-                                                           if (DeadboltAnalyzer.hasRole(subject, "admin"))
-                                                           {
-                                                               allowed = true;
-                                                           }
-                                                           else
-                                                           {
-                                                               // a call to view profile is probably a get request, so
-                                                               // the query string is used to provide info
+                                                   .map(subjectOption -> {
+                                                       final boolean[] allowed = {false};
+                                                       if (new DeadboltAnalyzer().hasRole(subjectOption, "admin"))
+                                                       {
+                                                           allowed[0] = true;
+                                                       }
+                                                       else
+                                                       {
+                                                           subjectOption.ifPresent(subject -> {
+                                                               // for the purpose of this example, we assume a call to view profile is probably
+                                                               // a get request, so the query string is used to provide info
                                                                Map<String, String[]> queryStrings = context.request().queryString();
                                                                String[] requestedNames = queryStrings.get("userName");
-                                                               allowed = requestedNames != null
+                                                               allowed[0] = requestedNames != null
                                                                        && requestedNames.length == 1
                                                                        && requestedNames[0].equals(subject.getIdentifier());
-                                                           }
-
-                                                           return allowed;
+                                                           });
                                                        }
-                                                   }).get(1, TimeUnit.SECONDS);
+
+                                                       return allowed[0];
+                                                   });
                          }
-                     });
-    }
-    
-    public boolean isAllowed(String name,
-                             String meta,
-                             DeadboltHandler deadboltHandler,
-                             Http.Context context)
-    {
-        DynamicResourceHandler handler = HANDLERS.get(name);
-        boolean result = false;
-        if (handler == null)
-        {
-            Logger.error("No handler available for " + name);
-        }
-        else
-        {
-            result = handler.isAllowed(name,
-                                       meta,
-                                       deadboltHandler,
-                                       context);
-        }
-        return result;
+                     }));
     }
 
-    public boolean checkPermission(final String permissionValue,
-                                   final DeadboltHandler deadboltHandler,
-                                   final Http.Context ctx)
+    public F.Promise<Boolean> isAllowed(final String name,
+                                        final String meta,
+                                        final DeadboltHandler deadboltHandler,
+                                        final Http.Context context)
+    {
+        return HANDLERS.get(name)
+                       .orElseGet(() -> {
+                           Logger.error("No handler available for " + name);
+                           return DENY;
+                       })
+                       .isAllowed(name,
+                                  meta,
+                                  deadboltHandler,
+                                  context);
+    }
+
+    public F.Promise<Boolean> checkPermission(final String permissionValue,
+                                              final DeadboltHandler deadboltHandler,
+                                              final Http.Context ctx)
     {
         return deadboltHandler.getSubject(ctx)
-                              .map(new F.Function<Subject, Boolean>()
-                              {
-                                  @Override
-                                  public Boolean apply(Subject subject) throws Throwable
-                                  {
-                                      boolean permissionOk = false;
-
-                                      if (subject != null)
+                              .map(subjectOption -> {
+                                  final boolean[] permissionOk = {false};
+                                  subjectOption.ifPresent(subject -> {
+                                      List<? extends Permission> permissions = subject.getPermissions();
+                                      for (Iterator<? extends Permission> iterator = permissions.iterator(); !permissionOk[0] && iterator.hasNext(); )
                                       {
-                                          List<? extends Permission> permissions = subject.getPermissions();
-                                          for (Iterator<? extends Permission> iterator = permissions.iterator(); !permissionOk && iterator.hasNext(); )
-                                          {
-                                              Permission permission = iterator.next();
-                                              permissionOk = permission.getValue().contains(permissionValue);
-                                          }
+                                          Permission permission = iterator.next();
+                                          permissionOk[0] = permission.getValue().contains(permissionValue);
                                       }
+                                  });
 
-                                      return permissionOk;
-                                  }
-                              }).get(1, TimeUnit.SECONDS);
+                                  return permissionOk[0];
+                              });
     }
 }

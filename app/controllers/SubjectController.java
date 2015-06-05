@@ -17,6 +17,7 @@ package controllers;
 
 import be.objectify.deadbolt.java.actions.SubjectNotPresent;
 import be.objectify.deadbolt.java.actions.SubjectPresent;
+import play.libs.F;
 import play.mvc.Controller;
 import play.mvc.Result;
 import security.NoUserDeadboltHandler;
@@ -27,32 +28,32 @@ import views.html.accessOk;
  */
 public class SubjectController extends Controller
 {
-    public static Result index()
+    public static F.Promise<Result> index()
     {
-        return ok(accessOk.render());
+        return F.Promise.promise(() -> ok(accessOk.render()));
     }
 
     @SubjectPresent
-    public static Result subjectPresent()
+    public static F.Promise<Result> subjectPresent()
     {
-        return ok(accessOk.render());
+        return F.Promise.promise(() -> ok(accessOk.render()));
     }
 
-    @SubjectPresent(handler = NoUserDeadboltHandler.class)
-    public static Result subjectPresent_notLoggedIn()
+    @SubjectPresent(handlerKey = "noUserHandler")
+    public static F.Promise<Result> subjectPresent_notLoggedIn()
     {
-        return ok(accessOk.render());
+        return F.Promise.promise(() -> ok(accessOk.render()));
     }
 
-    @SubjectNotPresent(handler = NoUserDeadboltHandler.class)
-    public static Result subjectNotPresent()
+    @SubjectNotPresent(handlerKey = "noUserHandler")
+    public static F.Promise<Result> subjectNotPresent()
     {
-        return ok(accessOk.render());
+        return F.Promise.promise(() -> ok(accessOk.render()));
     }
 
     @SubjectNotPresent
-    public static Result subjectNotPresent_loggedIn()
+    public static F.Promise<Result> subjectNotPresent_loggedIn()
     {
-        return ok(accessOk.render());
+        return F.Promise.promise(() -> ok(accessOk.render()));
     }
 }

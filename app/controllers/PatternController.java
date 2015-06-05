@@ -17,6 +17,7 @@ package controllers;
 
 import be.objectify.deadbolt.core.PatternType;
 import be.objectify.deadbolt.java.actions.Pattern;
+import play.libs.F;
 import play.mvc.Controller;
 import play.mvc.Result;
 import views.html.accessOk;
@@ -27,20 +28,20 @@ import views.html.accessOk;
 public class PatternController extends Controller
 {
     @Pattern("printers.edit")
-    public static Result editPrinter()
+    public static F.Promise<Result> editPrinter()
     {
-        return ok(accessOk.render());
+        return F.Promise.promise(() -> ok(accessOk.render()));
     }
 
     @Pattern("printers.detonate")
-    public static Result detonatePrinter()
+    public static F.Promise<Result> detonatePrinter()
     {
-        return ok(accessOk.render());
+        return F.Promise.promise(() -> ok(accessOk.render()));
     }
 
     @Pattern(value = "(.)*\\.edit", patternType = PatternType.REGEX)
-    public static Result editPrinterRegex()
+    public static F.Promise<Result> editPrinterRegex()
     {
-        return ok(accessOk.render());
+        return F.Promise.promise(() -> ok(accessOk.render()));
     }
 }

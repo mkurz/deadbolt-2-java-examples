@@ -17,9 +17,9 @@ package controllers;
 
 import be.objectify.deadbolt.java.actions.Dynamic;
 import be.objectify.deadbolt.java.actions.SubjectPresent;
+import play.libs.F;
 import play.mvc.Controller;
 import play.mvc.Result;
-import security.MyAlternativeDeadboltHandler;
 import views.html.accessOk;
 
 /**
@@ -28,26 +28,26 @@ import views.html.accessOk;
 @SubjectPresent
 public class DynamicRestrictionsController extends Controller
 {
-    public static Result index()
+    public static F.Promise<Result> index()
     {
-        return ok(accessOk.render());
+        return F.Promise.promise(() -> ok(accessOk.render()));
     }
 
     @Dynamic("pureLuck")
-    public static Result pureLuck()
+    public static F.Promise<Result> pureLuck()
     {
-        return ok(accessOk.render());
+        return F.Promise.promise(() -> ok(accessOk.render()));
     }
 
-    @Dynamic(value = "pureLuck", handler = MyAlternativeDeadboltHandler.class)
-    public static Result noWayJose()
+    @Dynamic(value = "pureLuck", handlerKey = "altHandler")
+    public static F.Promise<Result> noWayJose()
     {
-        return ok(accessOk.render());
+        return F.Promise.promise(() -> ok(accessOk.render()));
     }
 
     @Dynamic(value = "viewProfile")
-    public static Result viewProfile(String userName)
+    public static F.Promise<Result> viewProfile(final String userName)
     {
-        return ok(accessOk.render());
+        return F.Promise.promise(() -> ok(accessOk.render()));
     }
 }

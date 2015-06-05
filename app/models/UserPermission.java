@@ -16,7 +16,7 @@
 package models;
 
 import be.objectify.deadbolt.core.models.Permission;
-import play.db.ebean.Model;
+import com.avaje.ebean.Model;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -34,8 +34,8 @@ public class UserPermission extends Model implements Permission
     @Column(name = "permission_value")
     public String value;
 
-    public static final Model.Finder<Long, UserPermission> find = new Model.Finder<Long, UserPermission>(Long.class,
-                                                                                                         UserPermission.class);
+    public static final Model.Finder<Long, UserPermission> find = new Model.Finder<>(Long.class,
+                                                                                     UserPermission.class);
 
     public String getValue()
     {

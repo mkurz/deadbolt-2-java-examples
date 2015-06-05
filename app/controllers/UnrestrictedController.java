@@ -18,6 +18,7 @@ package controllers;
 import be.objectify.deadbolt.java.actions.Group;
 import be.objectify.deadbolt.java.actions.Restrict;
 import be.objectify.deadbolt.java.actions.Unrestricted;
+import play.libs.F;
 import play.mvc.Controller;
 import play.mvc.Result;
 import views.html.accessOk;
@@ -29,14 +30,14 @@ import views.html.accessOk;
 @Restrict(@Group("hurdy"))
 public class UnrestrictedController extends Controller
 {
-    public static Result index()
+    public static F.Promise<Result> index()
     {
-        return ok(accessOk.render());
+        return F.Promise.promise(() -> ok(accessOk.render()));
     }
 
     @Unrestricted
-    public static Result unrestrictedWithinAConstrainedController()
+    public static F.Promise<Result> unrestrictedWithinAConstrainedController()
     {
-        return ok(accessOk.render());
+        return F.Promise.promise(() -> ok(accessOk.render()));
     }
 }

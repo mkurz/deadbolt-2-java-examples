@@ -1,17 +1,15 @@
 name := "deadbolt-2-usage-java"
 
-version := "2.3.2"
+version := "2.4.0-SNAPSHOT"
 
-lazy val root = (project in file(".")).enablePlugins(PlayJava)
+lazy val root = (project in file(".")).enablePlugins(PlayJava, PlayEbean)
 
-scalaVersion := "2.11.1"
+scalaVersion := "2.11.6"
 
 organization := "be.objectify"
 
 libraryDependencies ++= Seq(
-  javaEbean,
-  "be.objectify" %% "deadbolt-java" % "2.3.2",
+  "be.objectify" %% "deadbolt-java" % "2.4.0-SNAPSHOT",
   "postgresql" % "postgresql" % "9.1-901-1.jdbc4"
 )
 
-resolvers += Resolver.url("Objectify Play Repository", url("http://schaloner.github.com/releases/"))(Resolver.ivyStylePatterns)

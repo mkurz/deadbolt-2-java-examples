@@ -15,13 +15,17 @@
  */
 package actions;
 
+import be.objectify.deadbolt.java.JavaDeadboltAnalyzer;
 import be.objectify.deadbolt.java.actions.RestrictAction;
+import be.objectify.deadbolt.java.cache.HandlerCache;
+import be.objectify.deadbolt.java.cache.SubjectCache;
 import play.libs.F;
 import play.mvc.Action;
 import play.mvc.Http;
 import play.mvc.Result;
 import security.MyRoles;
 
+import javax.inject.Inject;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -30,11 +34,30 @@ import java.util.List;
  */
 public class CustomRestrictAction extends Action<CustomRestrict>
 {
+    final JavaDeadboltAnalyzer analyzer;
+
+    final SubjectCache subjectCache;
+
+    final HandlerCache handlerCache;
+
+    @Inject
+    public CustomRestrictAction(final JavaDeadboltAnalyzer analyzer,
+                                final SubjectCache subjectCache,
+                                final HandlerCache handlerCache)
+    {
+        this.analyzer = analyzer;
+        this.subjectCache = subjectCache;
+        this.handlerCache = handlerCache;
+    }
+
     @Override
     public F.Promise<Result> call(Http.Context context) throws Throwable
     {
         final CustomRestrict outerConfig = configuration;
-        RestrictAction restrictionsAction = new RestrictAction(configuration.config(),
+        RestrictAction restrictionsAction = new RestrictAction(analyzer,
+                                                               subjectCache,
+                                                               handlerCache,
+                                                               configuration.config(),
                                                                this.delegate)
         {
             @Override

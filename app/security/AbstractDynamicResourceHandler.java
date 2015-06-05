@@ -17,6 +17,7 @@ package security;
 
 import be.objectify.deadbolt.java.DeadboltHandler;
 import be.objectify.deadbolt.java.DynamicResourceHandler;
+import play.libs.F;
 import play.mvc.Http;
 
 /**
@@ -24,18 +25,18 @@ import play.mvc.Http;
  */
 public abstract class AbstractDynamicResourceHandler implements DynamicResourceHandler
 {
-    public boolean checkPermission(String permissionValue,
-                                   DeadboltHandler deadboltHandler,
-                                   Http.Context ctx)
+    public F.Promise<Boolean> checkPermission(final String permissionValue,
+                                              final DeadboltHandler deadboltHandler,
+                                              final Http.Context ctx)
     {
-        return false;
+        return F.Promise.pure(false);
     }
 
-    public boolean isAllowed(String name,
-                             String meta,
-                             DeadboltHandler deadboltHandler,
-                             Http.Context ctx)
+    public F.Promise<Boolean> isAllowed(final String name,
+                                        final String meta,
+                                        final DeadboltHandler deadboltHandler,
+                                        final Http.Context ctx)
     {
-        return false;
+        return F.Promise.pure(false);
     }
 }

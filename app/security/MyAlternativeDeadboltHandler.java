@@ -24,33 +24,29 @@ import play.mvc.Http;
 import play.mvc.Result;
 import views.html.accessFailed;
 
+import java.util.Optional;
+
 /**
  * @author Steve Chaloner (steve@objectify.be)
  */
 public class MyAlternativeDeadboltHandler extends AbstractDeadboltHandler
 {
-    public F.Promise<Result> beforeAuthCheck(Http.Context context)
+    public F.Promise<Optional<Result>> beforeAuthCheck(Http.Context context)
     {
         // returning null means that everything is OK.  Return a real result if you want a redirect to a login page or
         // somewhere else
-        return F.Promise.pure(null);
+        return F.Promise.promise(Optional::empty);
     }
 
-    public F.Promise<Subject> getSubject(Http.Context context)
+    public F.Promise<Optional<Subject>> getSubject(Http.Context context)
     {
         // in a real application, the user name would probably be in the session following a login process
-        return F.Promise.promise(new F.Function0<Subject>()
-        {
-            @Override
-            public Subject apply() throws Throwable {
-                return AuthorisedUser.findByUserName("steve");
-            }
-        });
+        return F.Promise.promise(() -> Optional.ofNullable(AuthorisedUser.findByUserName("steve")));
     }
 
-    public DynamicResourceHandler getDynamicResourceHandler(Http.Context context)
+    public F.Promise<Optional<DynamicResourceHandler>> getDynamicResourceHandler(Http.Context context)
     {
-        return new MyAlternativeDynamicResourceHandler();
+        return F.Promise.promise(() -> Optional.of(new MyAlternativeDynamicResourceHandler()));
     }
 
     @Override
@@ -58,12 +54,6 @@ public class MyAlternativeDeadboltHandler extends AbstractDeadboltHandler
                                            String content)
     {
         // you can return any result from here - forbidden, etc
-        return F.Promise.promise(new F.Function0<Result>()
-        {
-            @Override
-            public Result apply() throws Throwable {
-                return ok(accessFailed.render());
-            }
-        });
+        return F.Promise.promise(() -> ok(accessFailed.render()));
     }
 }
