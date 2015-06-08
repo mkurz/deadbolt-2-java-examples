@@ -15,7 +15,7 @@
  */
 package actions;
 
-import be.objectify.deadbolt.java.JavaDeadboltAnalyzer;
+import be.objectify.deadbolt.java.JavaAnalyzer;
 import be.objectify.deadbolt.java.actions.RestrictAction;
 import be.objectify.deadbolt.java.cache.HandlerCache;
 import be.objectify.deadbolt.java.cache.SubjectCache;
@@ -34,14 +34,14 @@ import java.util.List;
  */
 public class CustomRestrictAction extends Action<CustomRestrict>
 {
-    final JavaDeadboltAnalyzer analyzer;
+    final JavaAnalyzer analyzer;
 
     final SubjectCache subjectCache;
 
     final HandlerCache handlerCache;
 
     @Inject
-    public CustomRestrictAction(final JavaDeadboltAnalyzer analyzer,
+    public CustomRestrictAction(final JavaAnalyzer analyzer,
                                 final SubjectCache subjectCache,
                                 final HandlerCache handlerCache)
     {
