@@ -1,6 +1,6 @@
 @import security._
 @import be.objectify.deadbolt.java.views.html._
-@import be.objectify.deadbolt.core.utils.TemplateUtils._
+@import be.objectify.deadbolt.java.ViewAccessPoint.HANDLERS
 
 <div class="row-fluid" id="template-dynamic">
     <div class="span10">
@@ -22,12 +22,12 @@
     </div>
     <div class="span5">
         <pre>
-@@dynamic("pureLuck") {
+@@dynamic(name = "pureLuck") {
   This content may be visible, depending on your luck
 }</pre>
     </div>
     <div class="span2">
-        @dynamic("pureLuck") {
+        @dynamic(name = "pureLuck") {
         This content may be visible, depending on your luck
         }
     </div>
@@ -39,12 +39,12 @@
     </div>
     <div class="span5">
         <pre>
-@@dynamic(new MyDeadboltHandler("pureLuck", "", new MyAlternativeDynamicResourceHandler())) {
+@@dynamic(name = "pureLuck", handler = HANDLER_CACHE.apply(HandlerKeys.ALT.key)) {
   This content should NOT be visible
 }</pre>
     </div>
     <div class="span2">
-        @dynamic("pureLuck", "", new security.MyAlternativeDeadboltHandler()) {
+        @dynamic(name = "pureLuck", handler = HANDLERS.apply(HandlerKeys.ALT.key)) {
         This content should NOT be visible
         }
     </div>
@@ -56,12 +56,12 @@
     </div>
     <div class="span5">
         <pre>
-@@dynamicOr("pureLuck") {
+@@dynamicOr(name = "pureLuck") {
   This content may be visible, depending on your luck
 }{Guess you were unlucky}</pre>
     </div>
     <div class="span2">
-        @dynamicOr("pureLuck") {
+        @dynamicOr(name = "pureLuck") {
         This content may be visible, depending on your luck
         }{Guess you were unlucky}
     </div>
@@ -73,12 +73,12 @@
     </div>
     <div class="span5">
         <pre>
-@@dynamicOr("pureLuck", "", new security.MyAlternativeDeadboltHandler()) {
+@@dynamicOr(name = "pureLuck", handler = HANDLER_CACHE.apply(HandlerKeys.ALT.key)) {
   This content should NOT be visible
 }{Guess you were unlucky}</pre>
     </div>
     <div class="span2">
-        @dynamicOr("pureLuck", "", new security.MyAlternativeDeadboltHandler()) {
+        @dynamicOr(name = "pureLuck", handler = HANDLERS.apply(HandlerKeys.ALT.key)) {
         This content should NOT be visible
         }{Guess you were unlucky}
     </div>

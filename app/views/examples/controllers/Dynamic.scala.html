@@ -79,7 +79,7 @@ public boolean isAllowed(String name,
         // a call to view profile is probably a get request, so
         // the query string is used to provide info
         // See the Deadbolt documentation on why this is harder to do with path parameters
-        Map<String, String[]> queryStrings = context.request().queryString();
+        Map&lt;String, String[]&gt; queryStrings = context.request().queryString();
         String[] requestedNames = queryStrings.get("userName");
         allowed = requestedNames != null
                   && requestedNames.length == 1
@@ -115,7 +115,7 @@ public boolean isAllowed(String name,
         // a call to view profile is probably a get request, so
         // the query string is used to provide info
         // See the Deadbolt documentation on why this is harder to do with path parameters
-        Map<String, String[]> queryStrings = context.request().queryString();
+        Map&lt;String, String[]&gt; queryStrings = context.request().queryString();
         String[] requestedNames = queryStrings.get("userName");
         allowed = requestedNames != null
                   && requestedNames.length == 1

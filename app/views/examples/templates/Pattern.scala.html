@@ -1,7 +1,5 @@
-@import security._
-@import be.objectify.deadbolt.core.utils.TemplateUtils._
 @import be.objectify.deadbolt.core.PatternType
-@import be.objectify.deadbolt.java.views.html._
+@import be.objectify.deadbolt.java.views.html.pattern
 
 <div class="row-fluid" id="template-pattern">
     <div class="span10">
@@ -22,12 +20,12 @@
     </div>
     <div class="span5">
         <pre>
-@@pattern("printers.edit") {
+@@pattern(value = "printers.edit") {
   This content should be visible
 }</pre>
     </div>
     <div class="span2">
-        @pattern("printers.edit") {
+        @pattern(value = "printers.edit") {
         This content should be visible
         }
     </div>
@@ -39,12 +37,12 @@
     </div>
     <div class="span5">
         <pre>
-@@pattern("printers.foo") {
-  This content should not visible
+@@pattern(value = "printers.foo") {
+  This content should NOT be visible
 }</pre>
     </div>
     <div class="span2">
-        @pattern("printers.foo") {
+        @pattern(value = "printers.foo") {
         This content should NOT be visible
         }
     </div>
@@ -56,12 +54,12 @@
     </div>
     <div class="span5">
         <pre>
-@@pattern("(.)*\\.edit", PatternType.REGEX) {
+@@pattern(value = "(.)*\\.edit", patternType = PatternType.REGEX) {
   This content should be visible
 }</pre>
     </div>
     <div class="span2">
-        @pattern("(.)*\\.edit", PatternType.REGEX) {
+        @pattern(value = "(.)*\\.edit", patternType = PatternType.REGEX) {
         This content should be visible
         }
     </div>
@@ -73,12 +71,12 @@
     </div>
     <div class="span5">
         <pre>
-@@pattern("(.)*\\.foo", PatternType.REGEX) {
+@@pattern(value = "(.)*\\.foo", patternType = PatternType.REGEX) {
   This content should NOT be visible
 }</pre>
     </div>
     <div class="span2">
-        @pattern("(.)*\\.foo", PatternType.REGEX) {
+        @pattern(value = "(.)*\\.foo", patternType = PatternType.REGEX) {
         This content should NOT be visible
         }
     </div>

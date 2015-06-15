@@ -1,5 +1,5 @@
-@import be.objectify.deadbolt.java.views.html._
-@import be.objectify.deadbolt.core.utils.TemplateUtils._
+@import be.objectify.deadbolt.java.views.html.{restrict, restrictOr}
+@import be.objectify.deadbolt.core.utils.TemplateUtils.{la, as}
 
 <div class="row-fluid" id="template-restrict">
     <div class="span10">
@@ -30,12 +30,12 @@
     </div>
     <div class="span5">
         <pre>
-@@restrict(la(as("foo", "bar"))) {
+@@restrict(roles = la(as("foo", "bar"))) {
   This content should be visible
 }</pre>
     </div>
     <div class="span2">
-        @restrict(la(as("foo", "bar"))) {
+        @restrict(roles = la(as("foo", "bar"))) {
         This content should be visible
         }
     </div>
@@ -47,12 +47,12 @@
     </div>
     <div class="span5">
         <pre>
-@@restrict(la(as("foo", "bar", "hurdy"))) {
+@@restrict(roles = la(as("foo", "bar", "hurdy"))) {
   This content should NOT be visible
 }</pre>
     </div>
     <div class="span2">
-        @restrict(la(as("foo", "bar", "hurdy"))) {
+        @restrict(roles = la(as("foo", "bar", "hurdy"))) {
         This content should NOT be visible
         }
     </div>
@@ -64,12 +64,12 @@
     </div>
     <div class="span5">
         <pre>
-@@restrict(List(as("hurdy"), as("foo", "bar"))) {
+@@restrict(roles = la(as("hurdy"), as("foo", "bar"))) {
   This content should be visible
 }</pre>
     </div>
     <div class="span2">
-        @restrict(la(as("hurdy"), as("foo", "bar"))) {
+        @restrict(roles = la(as("hurdy"), as("foo", "bar"))) {
             This content should be visible
         }
     </div>
@@ -98,12 +98,12 @@
     </div>
     <div class="span5">
         <pre>
-@@restrictOr(la(as("foo", "bar", "hurdy"))) {
+@@restrictOr(roles = la(as("foo", "bar", "hurdy"))) {
   This content should NOT be visible
 }{Sorry, you're not allowed to see this}</pre>
     </div>
     <div class="span2">
-        @restrictOr(la(as("foo", "bar", "hurdy"))) {
+        @restrictOr(roles = la(as("foo", "bar", "hurdy"))) {
         This content should NOT be visible
         }{Sorry, you're not allowed to see this}
     </div>
