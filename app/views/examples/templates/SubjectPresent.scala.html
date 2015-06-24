@@ -1,5 +1,6 @@
 @import be.objectify.deadbolt.java.views.html.{subjectPresent, subjectPresentOr}
-@import be.objectify.deadbolt.java.ViewAccessPoint.HANDLERS
+@import be.objectify.deadbolt.java.ViewAccessPoint.Implicits._
+@import play.api.Play.current
 
 <div class="row-fluid" id="template-subjectPresent">
     <div class="span10">
@@ -37,12 +38,12 @@
     </div>
     <div class="span5">
         <pre>
-@@subjectPresent(handler = HANDLERS.apply(security.HandlerKeys.NO_USER.key)) {
+@@subjectPresent(handler = handlerCache.apply(security.HandlerKeys.NO_USER.key)) {
   This content should NOT be visible
 }</pre>
     </div>
     <div class="span2">
-        @subjectPresent(handler = HANDLERS.apply(security.HandlerKeys.NO_USER.key)) {
+        @subjectPresent(handler = handlerCache.apply(security.HandlerKeys.NO_USER.key)) {
         This content should NOT be visible
         }
     </div>
@@ -72,12 +73,12 @@
     </div>
     <div class="span5">
         <pre>
-@@subjectPresentOr(handler = HANDLERS.apply(security.HandlerKeys.NO_USER.key)) {
+@@subjectPresentOr(handler = handlerCache.apply(security.HandlerKeys.NO_USER.key)) {
   This content should be NOT visible
 }{Sorry, no access}</pre>
     </div>
     <div class="span2">
-        @subjectPresentOr(handler = HANDLERS.apply(security.HandlerKeys.NO_USER.key)) {
+        @subjectPresentOr(handler = handlerCache.apply(security.HandlerKeys.NO_USER.key)) {
         This content should be NOT visible
         }{Sorry, no access}
     </div>

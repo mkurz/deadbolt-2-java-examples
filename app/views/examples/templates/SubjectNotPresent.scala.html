@@ -1,5 +1,6 @@
 @import be.objectify.deadbolt.java.views.html.{subjectNotPresent, subjectNotPresentOr}
-@import be.objectify.deadbolt.java.ViewAccessPoint.HANDLERS
+@import be.objectify.deadbolt.java.ViewAccessPoint.Implicits._
+@import play.api.Play.current
 
 <div class="row-fluid" id="template-subjectNotPresent">
     <div class="span10">
@@ -37,12 +38,12 @@
     </div>
     <div class="span5">
         <pre>
-@@subjectNotPresent(handler = HANDLERS.apply(security.HandlerKeys.NO_USER.key)) {
+@@subjectNotPresent(handler = handlerCache.apply(security.HandlerKeys.NO_USER.key)) {
   This content should be visible
 }</pre>
     </div>
     <div class="span2">
-        @subjectNotPresent(handler = HANDLERS.apply(security.HandlerKeys.NO_USER.key)) {
+        @subjectNotPresent(handler = handlerCache.apply(security.HandlerKeys.NO_USER.key)) {
         This content should be visible
         }
     </div>
@@ -72,12 +73,12 @@
     </div>
     <div class="span5">
         <pre>
-@@subjectNotPresentOr(handler = HANDLERS.apply(security.HandlerKeys.NO_USER.key)) {
+@@subjectNotPresentOr(handler = handlerCache.apply(security.HandlerKeys.NO_USER.key)) {
   This content should be visible
 }{Sorry, no access}</pre>
     </div>
     <div class="span2">
-        @subjectNotPresentOr(handler = HANDLERS.apply(security.HandlerKeys.NO_USER.key)) {
+        @subjectNotPresentOr(handler = handlerCache.apply(security.HandlerKeys.NO_USER.key)) {
         This content should be visible
         }{Sorry, no access}
     </div>

@@ -1,6 +1,7 @@
 @import security._
 @import be.objectify.deadbolt.java.views.html._
-@import be.objectify.deadbolt.java.ViewAccessPoint.HANDLERS
+@import be.objectify.deadbolt.java.ViewAccessPoint.Implicits._
+@import play.api.Play.current
 
 <div class="row-fluid" id="template-dynamic">
     <div class="span10">
@@ -39,12 +40,12 @@
     </div>
     <div class="span5">
         <pre>
-@@dynamic(name = "pureLuck", handler = HANDLER_CACHE.apply(HandlerKeys.ALT.key)) {
+@@dynamic(name = "pureLuck", handler = handlerCache.apply(HandlerKeys.ALT.key)) {
   This content should NOT be visible
 }</pre>
     </div>
     <div class="span2">
-        @dynamic(name = "pureLuck", handler = HANDLERS.apply(HandlerKeys.ALT.key)) {
+        @dynamic(name = "pureLuck", handler = handlerCache.apply(HandlerKeys.ALT.key)) {
         This content should NOT be visible
         }
     </div>
@@ -73,12 +74,12 @@
     </div>
     <div class="span5">
         <pre>
-@@dynamicOr(name = "pureLuck", handler = HANDLER_CACHE.apply(HandlerKeys.ALT.key)) {
+@@dynamicOr(name = "pureLuck", handler = handlerCache.apply(HandlerKeys.ALT.key)) {
   This content should NOT be visible
 }{Guess you were unlucky}</pre>
     </div>
     <div class="span2">
-        @dynamicOr(name = "pureLuck", handler = HANDLERS.apply(HandlerKeys.ALT.key)) {
+        @dynamicOr(name = "pureLuck", handler = handlerCache.apply(HandlerKeys.ALT.key)) {
         This content should NOT be visible
         }{Guess you were unlucky}
     </div>
