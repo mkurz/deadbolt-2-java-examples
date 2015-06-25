@@ -28,31 +28,31 @@ import views.html.accessOk;
  */
 public class SubjectController extends Controller
 {
-    public static F.Promise<Result> index()
+    public F.Promise<Result> index()
     {
         return F.Promise.promise(() -> ok(accessOk.render()));
     }
 
     @SubjectPresent
-    public static F.Promise<Result> subjectPresent()
+    public F.Promise<Result> subjectPresent()
     {
         return F.Promise.promise(() -> ok(accessOk.render()));
     }
 
     @SubjectPresent(handlerKey = "noUserHandler")
-    public static F.Promise<Result> subjectPresent_notLoggedIn()
+    public F.Promise<Result> subjectPresent_notLoggedIn()
     {
         return F.Promise.promise(() -> ok(accessOk.render()));
     }
 
     @SubjectNotPresent(handlerKey = "noUserHandler")
-    public static F.Promise<Result> subjectNotPresent()
+    public F.Promise<Result> subjectNotPresent()
     {
         return F.Promise.promise(() -> ok(accessOk.render()));
     }
 
     @SubjectNotPresent
-    public static F.Promise<Result> subjectNotPresent_loggedIn()
+    public F.Promise<Result> subjectNotPresent_loggedIn()
     {
         return F.Promise.promise(() -> ok(accessOk.render()));
     }

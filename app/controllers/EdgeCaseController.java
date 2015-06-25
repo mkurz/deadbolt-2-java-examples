@@ -29,7 +29,7 @@ import views.html.accessOk;
 public class EdgeCaseController extends Controller
 {
     @Restrict(value = @Group("causeFailure"), handlerKey= "buggyHandler")
-    public static F.Promise<Result> index()
+    public F.Promise<Result> index()
     {
         return F.Promise.promise(() -> ok(accessOk.render()));
     }

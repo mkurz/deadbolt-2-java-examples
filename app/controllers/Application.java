@@ -9,7 +9,7 @@ import views.html.index;
 
 public class Application extends Controller
 {
-    public static F.Promise<Result> index()
+    public F.Promise<Result> index()
     {
         return F.Promise.promise(() -> AuthorisedUser.findByUserName("steve"))
                 .map(user -> ok(index.render(user)));

@@ -28,19 +28,19 @@ import views.html.accessOk;
 public class PatternController extends Controller
 {
     @Pattern("printers.edit")
-    public static F.Promise<Result> editPrinter()
+    public F.Promise<Result> editPrinter()
     {
         return F.Promise.promise(() -> ok(accessOk.render()));
     }
 
     @Pattern("printers.detonate")
-    public static F.Promise<Result> detonatePrinter()
+    public F.Promise<Result> detonatePrinter()
     {
         return F.Promise.promise(() -> ok(accessOk.render()));
     }
 
     @Pattern(value = "(.)*\\.edit", patternType = PatternType.REGEX)
-    public static F.Promise<Result> editPrinterRegex()
+    public F.Promise<Result> editPrinterRegex()
     {
         return F.Promise.promise(() -> ok(accessOk.render()));
     }

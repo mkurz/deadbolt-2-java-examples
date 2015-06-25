@@ -30,13 +30,13 @@ import views.html.accessOk;
 @Restrict(@Group("hurdy"))
 public class UnrestrictedController extends Controller
 {
-    public static F.Promise<Result> index()
+    public F.Promise<Result> index()
     {
         return F.Promise.promise(() -> ok(accessOk.render()));
     }
 
     @Unrestricted
-    public static F.Promise<Result> unrestrictedWithinAConstrainedController()
+    public F.Promise<Result> unrestrictedWithinAConstrainedController()
     {
         return F.Promise.promise(() -> ok(accessOk.render()));
     }

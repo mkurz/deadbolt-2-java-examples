@@ -28,25 +28,25 @@ import views.html.accessOk;
 @SubjectPresent
 public class DynamicRestrictionsController extends Controller
 {
-    public static F.Promise<Result> index()
+    public F.Promise<Result> index()
     {
         return F.Promise.promise(() -> ok(accessOk.render()));
     }
 
     @Dynamic("pureLuck")
-    public static F.Promise<Result> pureLuck()
+    public F.Promise<Result> pureLuck()
     {
         return F.Promise.promise(() -> ok(accessOk.render()));
     }
 
     @Dynamic(value = "pureLuck", handlerKey = "altHandler")
-    public static F.Promise<Result> noWayJose()
+    public F.Promise<Result> noWayJose()
     {
         return F.Promise.promise(() -> ok(accessOk.render()));
     }
 
     @Dynamic(value = "viewProfile")
-    public static F.Promise<Result> viewProfile(final String userName)
+    public F.Promise<Result> viewProfile(final String userName)
     {
         return F.Promise.promise(() -> ok(accessOk.render()));
     }

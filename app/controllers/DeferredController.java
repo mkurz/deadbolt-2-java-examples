@@ -16,7 +16,13 @@
 package controllers;
 
 import actions.UpdateContext;
-import be.objectify.deadbolt.java.actions.*;
+import be.objectify.deadbolt.java.actions.DeferredDeadbolt;
+import be.objectify.deadbolt.java.actions.Dynamic;
+import be.objectify.deadbolt.java.actions.Group;
+import be.objectify.deadbolt.java.actions.Pattern;
+import be.objectify.deadbolt.java.actions.Restrict;
+import be.objectify.deadbolt.java.actions.SubjectNotPresent;
+import be.objectify.deadbolt.java.actions.SubjectPresent;
 import play.libs.F;
 import play.mvc.Controller;
 import play.mvc.Result;
@@ -30,37 +36,37 @@ import views.html.accessOk;
 public class DeferredController extends Controller
 {
     @Restrict(value=@Group("foo"), deferred=true)
-    public static F.Promise<Result> deferredRestrict()
+    public F.Promise<Result> deferredRestrict()
     {
         return F.Promise.promise(() -> ok(accessOk.render()));
     }
 
     @Restrict(value=@Group({"foo", "bar"}), deferred=true)
-    public static F.Promise<Result> deferredRestrictions()
+    public F.Promise<Result> deferredRestrictions()
     {
         return F.Promise.promise(() -> ok(accessOk.render()));
     }
 
     @Pattern(value = "printers.detonate", deferred=true)
-    public static F.Promise<Result> deferredPattern()
+    public F.Promise<Result> deferredPattern()
     {
         return F.Promise.promise(() -> ok(accessOk.render()));
     }
 
     @Dynamic(value="pureLuck", deferred=true)
-    public static F.Promise<Result> deferredDynamic()
+    public F.Promise<Result> deferredDynamic()
     {
         return F.Promise.promise(() -> ok(accessOk.render()));
     }
 
     @SubjectPresent(deferred=true)
-    public static F.Promise<Result> deferredSubjectPresent()
+    public F.Promise<Result> deferredSubjectPresent()
     {
         return F.Promise.promise(() -> ok(accessOk.render()));
     }
 
     @SubjectNotPresent(deferred=true)
-    public static F.Promise<Result> deferredSubjectNotPresent()
+    public F.Promise<Result> deferredSubjectNotPresent()
     {
         return F.Promise.promise(() -> ok(accessOk.render()));
     }

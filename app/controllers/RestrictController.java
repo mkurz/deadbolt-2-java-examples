@@ -32,37 +32,37 @@ import views.html.accessOk;
         @Group("bar")})
 public class RestrictController extends Controller
 {
-    public static F.Promise<Result> index()
+    public F.Promise<Result> index()
     {
         return F.Promise.promise(() -> ok(accessOk.render()));
     }
 
     @Restrict({@Group({"foo", "bar"})})
-    public static F.Promise<Result> restrictOne()
+    public F.Promise<Result> restrictOne()
     {
         return F.Promise.promise(() -> ok(accessOk.render()));
     }
 
     @Restrict({@Group({"hurdy", "gurdy"}), @Group("foo")})
-    public static F.Promise<Result> restrictTwo()
+    public F.Promise<Result> restrictTwo()
     {
         return F.Promise.promise(() -> ok(accessOk.render()));
     }
 
     @Restrict({@Group("foo"), @Group("!bar")})
-    public static F.Promise<Result> restrictThree()
+    public F.Promise<Result> restrictThree()
     {
         return F.Promise.promise(() -> ok(accessOk.render()));
     }
 
     @Restrict(@Group({"hurdy", "foo"}))
-    public static F.Promise<Result> restrictFour()
+    public F.Promise<Result> restrictFour()
     {
         return F.Promise.promise(() -> ok(accessOk.render()));
     }
 
     @Restrict(@Group({"foo", "!bar"}))
-    public static F.Promise<Result> restrictFive()
+    public F.Promise<Result> restrictFive()
     {
         return F.Promise.promise(() -> ok(accessOk.render()));
     }
@@ -71,7 +71,7 @@ public class RestrictController extends Controller
     @CustomRestrict(value = {@RoleGroup({MyRoles.foo, MyRoles.bar}),
                              @RoleGroup(MyRoles.hurdy)},
                     config = @Restrict({}))
-    public static F.Promise<Result> customRestrictOne()
+    public F.Promise<Result> customRestrictOne()
     {
         return F.Promise.promise(() -> ok(accessOk.render()));
     }
@@ -79,7 +79,7 @@ public class RestrictController extends Controller
     @CustomRestrict(value = {@RoleGroup({MyRoles.hurdy, MyRoles.foo}),
                              @RoleGroup({MyRoles.hurdy, MyRoles.bar})},
                     config = @Restrict({}))
-    public static F.Promise<Result> customRestrictTwo()
+    public F.Promise<Result> customRestrictTwo()
     {
         return F.Promise.promise(() -> ok(accessOk.render()));
     }
