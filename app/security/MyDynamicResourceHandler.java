@@ -15,12 +15,11 @@
  */
 package security;
 
-import be.objectify.deadbolt.core.DeadboltAnalyzer;
-import be.objectify.deadbolt.core.models.Permission;
+import be.objectify.deadbolt.java.DeadboltAnalyzer;
 import be.objectify.deadbolt.java.DeadboltHandler;
 import be.objectify.deadbolt.java.DynamicResourceHandler;
+import be.objectify.deadbolt.java.models.Permission;
 import play.Logger;
-import play.libs.F;
 import play.mvc.Http;
 
 import java.util.HashMap;
@@ -28,6 +27,8 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.CompletionStage;
 
 /**
  * @author Steve Chaloner (steve@objectify.be)
@@ -39,15 +40,15 @@ public class MyDynamicResourceHandler implements DynamicResourceHandler
     private static final DynamicResourceHandler DENY = new DynamicResourceHandler()
     {
         @Override
-        public F.Promise<Boolean> isAllowed(String s, String s1, DeadboltHandler deadboltHandler, Http.Context context)
+        public CompletionStage<Boolean> isAllowed(String name, Optional<String> meta, DeadboltHandler deadboltHandler, Http.Context context)
         {
-            return F.Promise.pure(false);
+            return CompletableFuture.completedFuture(Boolean.FALSE);
         }
 
         @Override
-        public F.Promise<Boolean> checkPermission(String s, DeadboltHandler deadboltHandler, Http.Context context)
+        public CompletionStage<Boolean> checkPermission(String value, Optional<String> meta, DeadboltHandler deadboltHandler, Http.Context context)
         {
-            return F.Promise.pure(false);
+            return CompletableFuture.completedFuture(Boolean.FALSE);
         }
     };
 
@@ -56,24 +57,24 @@ public class MyDynamicResourceHandler implements DynamicResourceHandler
         HANDLERS.put("pureLuck",
                      Optional.of(new AbstractDynamicResourceHandler()
                      {
-                         public F.Promise<Boolean> isAllowed(final String name,
-                                                             final String meta,
-                                                             final DeadboltHandler deadboltHandler,
-                                                             final Http.Context context)
+                         public CompletionStage<Boolean> isAllowed(final String name,
+                                                                   final Optional<String> meta,
+                                                                   final DeadboltHandler deadboltHandler,
+                                                                   final Http.Context context)
                          {
-                             return F.Promise.promise(() -> System.currentTimeMillis() % 2 == 0);
+                             return CompletableFuture.supplyAsync(() -> System.currentTimeMillis() % 2 == 0);
                          }
                      }));
         HANDLERS.put("viewProfile",
                      Optional.of(new AbstractDynamicResourceHandler()
                      {
-                         public F.Promise<Boolean> isAllowed(final String name,
-                                                             final String meta,
+                         public CompletionStage<Boolean> isAllowed(final String name,
+                                                             final Optional<String> meta,
                                                              final DeadboltHandler deadboltHandler,
                                                              final Http.Context context)
                          {
                              return deadboltHandler.getSubject(context)
-                                                   .map(subjectOption -> {
+                                                   .thenApplyAsync(subjectOption -> {
                                                        final boolean[] allowed = {false};
                                                        if (new DeadboltAnalyzer().hasRole(subjectOption, "admin"))
                                                        {
@@ -98,10 +99,10 @@ public class MyDynamicResourceHandler implements DynamicResourceHandler
                      }));
     }
 
-    public F.Promise<Boolean> isAllowed(final String name,
-                                        final String meta,
-                                        final DeadboltHandler deadboltHandler,
-                                        final Http.Context context)
+    public CompletionStage<Boolean> isAllowed(final String name,
+                                              final Optional<String> meta,
+                                              final DeadboltHandler deadboltHandler,
+                                              final Http.Context context)
     {
         return HANDLERS.get(name)
                        .orElseGet(() -> {
@@ -114,12 +115,13 @@ public class MyDynamicResourceHandler implements DynamicResourceHandler
                                   context);
     }
 
-    public F.Promise<Boolean> checkPermission(final String permissionValue,
-                                              final DeadboltHandler deadboltHandler,
-                                              final Http.Context ctx)
+    public CompletionStage<Boolean> checkPermission(final String permissionValue,
+                                                    final Optional<String> meta,
+                                                    final DeadboltHandler deadboltHandler,
+                                                    final Http.Context ctx)
     {
         return deadboltHandler.getSubject(ctx)
-                              .map(subjectOption -> {
+                              .thenApplyAsync(subjectOption -> {
                                   final boolean[] permissionOk = {false};
                                   subjectOption.ifPresent(subject -> {
                                       List<? extends Permission> permissions = subject.getPermissions();

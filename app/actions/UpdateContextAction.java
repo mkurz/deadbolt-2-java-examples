@@ -15,10 +15,11 @@
  */
 package actions;
 
-import play.libs.F;
 import play.mvc.Action;
 import play.mvc.Http;
 import play.mvc.Result;
+
+import java.util.concurrent.CompletionStage;
 
 /**
  * @author Steve Chaloner (steve@objectify.be)
@@ -26,7 +27,7 @@ import play.mvc.Result;
 public class UpdateContextAction extends Action<UpdateContext>
 {
     @Override
-    public F.Promise<Result> call(final Http.Context context) throws Throwable
+    public CompletionStage<Result> call(final Http.Context context)
     {
         context.args.put("UpdateContext",
                          configuration.value());

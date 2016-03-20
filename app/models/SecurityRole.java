@@ -15,7 +15,7 @@
  */
 package models;
 
-import be.objectify.deadbolt.core.models.Role;
+import be.objectify.deadbolt.java.models.Role;
 import com.avaje.ebean.Model;
 
 import javax.persistence.Entity;

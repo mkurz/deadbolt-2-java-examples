@@ -15,7 +15,7 @@
  */
 package controllers;
 
-import be.objectify.deadbolt.core.PatternType;
+import be.objectify.deadbolt.java.models.PatternType;
 import be.objectify.deadbolt.java.actions.Pattern;
 import play.libs.F;
 import play.mvc.Controller;

@@ -1,5 +1,5 @@
 @import be.objectify.deadbolt.java.views.html.{restrict, restrictOr}
-@import be.objectify.deadbolt.core.utils.TemplateUtils.{la, as}
+@import be.objectify.deadbolt.java.utils.TemplateUtils.{allOf, anyOf}
 
 <div class="row-fluid" id="template-restrict">
     <div class="span10">
@@ -35,7 +35,7 @@
 }</pre>
     </div>
     <div class="span2">
-        @restrict(roles = la(as("foo", "bar"))) {
+        @restrict(roles = anyOf(allOf("foo", "bar"))) {
         This content should be visible
         }
     </div>
@@ -52,7 +52,7 @@
 }</pre>
     </div>
     <div class="span2">
-        @restrict(roles = la(as("foo", "bar", "hurdy"))) {
+        @restrict(roles = anyOf(allOf("foo", "bar", "hurdy"))) {
         This content should NOT be visible
         }
     </div>
@@ -69,7 +69,7 @@
 }</pre>
     </div>
     <div class="span2">
-        @restrict(roles = la(as("hurdy"), as("foo", "bar"))) {
+        @restrict(roles = anyOf(allOf("hurdy"), allOf("foo", "bar"))) {
             This content should be visible
         }
     </div>
@@ -86,7 +86,7 @@
 }{Sorry, you're not allowed to see this}</pre>
     </div>
     <div class="span2">
-        @restrictOr(la(as("foo", "bar"))) {
+        @restrictOr(anyOf(allOf("foo", "bar"))) {
         This content should be visible
         }{Sorry, you're not allowed to see this}
     </div>
@@ -103,7 +103,7 @@
 }{Sorry, you're not allowed to see this}</pre>
     </div>
     <div class="span2">
-        @restrictOr(roles = la(as("foo", "bar", "hurdy"))) {
+        @restrictOr(roles = anyOf(allOf("foo", "bar", "hurdy"))) {
         This content should NOT be visible
         }{Sorry, you're not allowed to see this}
     </div>

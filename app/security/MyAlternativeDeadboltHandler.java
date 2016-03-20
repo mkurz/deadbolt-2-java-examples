@@ -15,45 +15,52 @@
  */
 package security;
 
-import be.objectify.deadbolt.core.models.Subject;
 import be.objectify.deadbolt.java.AbstractDeadboltHandler;
 import be.objectify.deadbolt.java.DynamicResourceHandler;
+import be.objectify.deadbolt.java.ExecutionContextProvider;
+import be.objectify.deadbolt.java.models.Subject;
 import models.AuthorisedUser;
-import play.libs.F;
 import play.mvc.Http;
 import play.mvc.Result;
 import views.html.accessFailed;
 
 import java.util.Optional;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.CompletionStage;
 
 /**
  * @author Steve Chaloner (steve@objectify.be)
  */
 public class MyAlternativeDeadboltHandler extends AbstractDeadboltHandler
 {
-    public F.Promise<Optional<Result>> beforeAuthCheck(Http.Context context)
+    public MyAlternativeDeadboltHandler(final ExecutionContextProvider ecProvider)
+    {
+        super(ecProvider);
+    }
+
+    public CompletionStage<Optional<Result>> beforeAuthCheck(final Http.Context context)
     {
         // returning null means that everything is OK.  Return a real result if you want a redirect to a login page or
         // somewhere else
-        return F.Promise.promise(Optional::empty);
+        return CompletableFuture.completedFuture(Optional.empty());
     }
 
-    public F.Promise<Optional<Subject>> getSubject(Http.Context context)
+    public CompletionStage<Optional<? extends Subject>> getSubject(final Http.Context context)
     {
         // in a real application, the user name would probably be in the session following a login process
-        return F.Promise.promise(() -> Optional.ofNullable(AuthorisedUser.findByUserName("steve")));
+        return CompletableFuture.supplyAsync(() -> Optional.ofNullable(AuthorisedUser.findByUserName("steve")));
     }
 
-    public F.Promise<Optional<DynamicResourceHandler>> getDynamicResourceHandler(Http.Context context)
+    public CompletionStage<Optional<DynamicResourceHandler>> getDynamicResourceHandler(Http.Context context)
     {
-        return F.Promise.promise(() -> Optional.of(new MyAlternativeDynamicResourceHandler()));
+        return CompletableFuture.supplyAsync(() -> Optional.of(new MyAlternativeDynamicResourceHandler()));
     }
 
     @Override
-    public F.Promise<Result> onAuthFailure(Http.Context context,
-                                           String content)
+    public CompletionStage<Result> onAuthFailure(final Http.Context context,
+                                                 final Optional<String> content)
     {
         // you can return any result from here - forbidden, etc
-        return F.Promise.promise(() -> ok(accessFailed.render()));
+        return CompletableFuture.supplyAsync(() -> ok(accessFailed.render()));
     }
 }

@@ -15,39 +15,57 @@
  */
 package security;
 
-import be.objectify.deadbolt.core.models.Subject;
 import be.objectify.deadbolt.java.AbstractDeadboltHandler;
 import be.objectify.deadbolt.java.DynamicResourceHandler;
-import play.libs.F;
+import be.objectify.deadbolt.java.ExecutionContextProvider;
+import be.objectify.deadbolt.java.models.Subject;
 import play.mvc.Http;
 import play.mvc.Result;
+import play.mvc.Results;
+import scala.concurrent.ExecutionContext;
 import views.html.accessFailed;
 
 import java.util.Optional;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.CompletionStage;
+import java.util.concurrent.Executor;
 
 /**
  * @author Steve Chaloner (steve@objectify.be)
  */
 public class NoUserDeadboltHandler extends AbstractDeadboltHandler
 {
-    public F.Promise<Optional<Result>> beforeAuthCheck(Http.Context context)
+    public NoUserDeadboltHandler(ExecutionContextProvider ecProvider)
     {
+        super(ecProvider);
+    }
+
+    public CompletionStage<Optional<Result>> beforeAuthCheck(final Http.Context context)
+    {
+        // if the API calls for an Optional, don't return a null!
+        // THIS IS A PURPOSEFUL ERROR - DO NOT REPEAT IN YOUR CODE!
         return null;
     }
 
-    public F.Promise<Optional<Subject>> getSubject(Http.Context context)
+    public CompletionStage<Optional<? extends Subject>> getSubject(final Http.Context context)
     {
-        return F.Promise.promise(Optional::empty);
+        return CompletableFuture.completedFuture(Optional.empty());
     }
 
-    public F.Promise<Result> onAuthFailure(Http.Context context,
-                                                 String content)
+    public CompletionStage<Result> onAuthFailure(final Http.Context context,
+                                                 final Optional<String> content)
     {
-        return F.Promise.promise(() -> ok(accessFailed.render()));
+        final ExecutionContext executionContext = executionContextProvider.get();
+        return CompletableFuture.supplyAsync(accessFailed::render,
+                                             (Executor) executionContext)
+                                .thenApplyAsync(Results::ok,
+                                                (Executor) executionContext);
     }
 
-    public F.Promise<Optional<DynamicResourceHandler>> getDynamicResourceHandler(Http.Context context)
+    public CompletionStage<Optional<DynamicResourceHandler>> getDynamicResourceHandler(Http.Context context)
     {
-        return F.Promise.promise(() -> Optional.of(new MyAlternativeDynamicResourceHandler()));
+        final ExecutionContext executionContext = executionContextProvider.get();
+        return CompletableFuture.supplyAsync(() -> Optional.of(new MyAlternativeDynamicResourceHandler()),
+                                             (Executor) executionContext);
     }
 }

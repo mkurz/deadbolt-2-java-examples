@@ -20,13 +20,15 @@ import be.objectify.deadbolt.java.DynamicResourceHandler;
 import play.libs.F;
 import play.mvc.Http;
 
+import java.util.Optional;
+
 /**
  * @author Steve Chaloner (steve@objectify.be)
  */
 public class MyAlternativeDynamicResourceHandler implements DynamicResourceHandler
 {
     public F.Promise<Boolean> isAllowed(final String name,
-                                        final String meta,
+                                        final Optional<String> meta,
                                         final DeadboltHandler deadboltHandler,
                                         final Http.Context context)
     {
@@ -35,6 +37,7 @@ public class MyAlternativeDynamicResourceHandler implements DynamicResourceHandl
     }
 
     public F.Promise<Boolean> checkPermission(final String permissionValue,
+                                              final Optional<String> meta,
                                               final DeadboltHandler deadboltHandler,
                                               final Http.Context ctx)
     {

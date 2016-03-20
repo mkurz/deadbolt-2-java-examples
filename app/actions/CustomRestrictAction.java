@@ -15,14 +15,11 @@
  */
 package actions;
 
+import be.objectify.deadbolt.java.ConstraintLogic;
 import be.objectify.deadbolt.java.ExecutionContextProvider;
-import be.objectify.deadbolt.java.JavaAnalyzer;
 import be.objectify.deadbolt.java.actions.RestrictAction;
 import be.objectify.deadbolt.java.cache.HandlerCache;
-import be.objectify.deadbolt.java.cache.SubjectCache;
 import play.Configuration;
-import play.libs.F;
-import play.libs.HttpExecution;
 import play.mvc.Action;
 import play.mvc.Http;
 import play.mvc.Result;
@@ -31,47 +28,43 @@ import security.MyRoles;
 import javax.inject.Inject;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.CompletionStage;
 
 /**
  * @author Steve Chaloner (steve@objectify.be)
  */
 public class CustomRestrictAction extends Action<CustomRestrict>
 {
-    final JavaAnalyzer analyzer;
-
-    final SubjectCache subjectCache;
-
     final HandlerCache handlerCache;
 
     final Configuration playConfig;
 
     final ExecutionContextProvider ecProvider;
 
+    private final ConstraintLogic constraintLogic;
+
     @Inject
-    public CustomRestrictAction(final JavaAnalyzer analyzer,
-                                final SubjectCache subjectCache,
-                                final HandlerCache handlerCache,
+    public CustomRestrictAction(final HandlerCache handlerCache,
                                 final Configuration playConfig,
-                                final ExecutionContextProvider ecProvider)
+                                final ExecutionContextProvider ecProvider,
+                                final ConstraintLogic constraintLogic)
     {
-        this.analyzer = analyzer;
-        this.subjectCache = subjectCache;
         this.handlerCache = handlerCache;
         this.playConfig = playConfig;
         this.ecProvider = ecProvider;
+        this.constraintLogic = constraintLogic;
     }
 
     @Override
-    public F.Promise<Result> call(Http.Context context) throws Throwable
+    public CompletionStage<Result> call(Http.Context context)
     {
         final CustomRestrict outerConfig = configuration;
-        RestrictAction restrictionsAction = new RestrictAction(analyzer,
-                                                               subjectCache,
-                                                               handlerCache,
+        RestrictAction restrictionsAction = new RestrictAction(handlerCache,
                                                                playConfig,
                                                                configuration.config(),
                                                                this.delegate,
-                                                               ecProvider)
+                                                               ecProvider,
+                                                               constraintLogic)
         {
             @Override
             public List<String[]> getRoleGroups()

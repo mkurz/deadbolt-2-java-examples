@@ -15,7 +15,7 @@
  */
 package security;
 
-import be.objectify.deadbolt.core.models.Role;
+import be.objectify.deadbolt.java.models.Role;
 
 /**
  * @author Steve Chaloner (steve@objectify.be)

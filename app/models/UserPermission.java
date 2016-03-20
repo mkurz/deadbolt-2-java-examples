@@ -15,7 +15,7 @@
  */
 package models;
 
-import be.objectify.deadbolt.core.models.Permission;
+import be.objectify.deadbolt.java.models.Permission;
 import com.avaje.ebean.Model;
 
 import javax.persistence.Column;
