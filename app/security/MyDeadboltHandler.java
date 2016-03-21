@@ -20,7 +20,6 @@ import be.objectify.deadbolt.java.DynamicResourceHandler;
 import be.objectify.deadbolt.java.ExecutionContextProvider;
 import be.objectify.deadbolt.java.models.Subject;
 import models.AuthorisedUser;
-import play.libs.F;
 import play.mvc.Http;
 import play.mvc.Result;
 import views.html.accessFailed;
@@ -64,6 +63,6 @@ public class MyDeadboltHandler extends AbstractDeadboltHandler
                                                  final Optional<String> content)
     {
         // you can return any result from here - forbidden, etc
-        return F.Promise.promise(() -> ok(accessFailed.render()));
+        return CompletableFuture.completedFuture(ok(accessFailed.render()));
     }
 }

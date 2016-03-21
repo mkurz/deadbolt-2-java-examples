@@ -17,31 +17,32 @@ package security;
 
 import be.objectify.deadbolt.java.DeadboltHandler;
 import be.objectify.deadbolt.java.DynamicResourceHandler;
-import play.libs.F;
 import play.mvc.Http;
 
 import java.util.Optional;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.CompletionStage;
 
 /**
  * @author Steve Chaloner (steve@objectify.be)
  */
 public class MyAlternativeDynamicResourceHandler implements DynamicResourceHandler
 {
-    public F.Promise<Boolean> isAllowed(final String name,
-                                        final Optional<String> meta,
-                                        final DeadboltHandler deadboltHandler,
-                                        final Http.Context context)
+    public CompletionStage<Boolean> isAllowed(final String name,
+                                              final Optional<String> meta,
+                                              final DeadboltHandler deadboltHandler,
+                                              final Http.Context context)
     {
         // look something up in an LDAP directory, etc, and the answer isn't good for the user
-        return F.Promise.pure(false);
+        return CompletableFuture.completedFuture(false);
     }
 
-    public F.Promise<Boolean> checkPermission(final String permissionValue,
+    public CompletionStage<Boolean> checkPermission(final String permissionValue,
                                               final Optional<String> meta,
                                               final DeadboltHandler deadboltHandler,
                                               final Http.Context ctx)
     {
         // Computer says no
-        return F.Promise.pure(false);
+        return CompletableFuture.completedFuture(false);
     }
 }

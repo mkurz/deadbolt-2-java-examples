@@ -17,11 +17,12 @@ package controllers;
 
 import be.objectify.deadbolt.java.actions.Group;
 import be.objectify.deadbolt.java.actions.Restrict;
-import play.libs.F;
 import play.mvc.Controller;
 import play.mvc.Result;
-import security.BuggyDeadboltHandler;
 import views.html.accessOk;
+
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.CompletionStage;
 
 /**
  * @author Steve Chaloner (steve@objectify.be)
@@ -29,8 +30,8 @@ import views.html.accessOk;
 public class EdgeCaseController extends Controller
 {
     @Restrict(value = @Group("causeFailure"), handlerKey= "buggyHandler")
-    public F.Promise<Result> index()
+    public CompletionStage<Result> index()
     {
-        return F.Promise.promise(() -> ok(accessOk.render()));
+        return CompletableFuture.completedFuture(ok(accessOk.render()));
     }
 }

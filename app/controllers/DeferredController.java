@@ -23,10 +23,12 @@ import be.objectify.deadbolt.java.actions.Pattern;
 import be.objectify.deadbolt.java.actions.Restrict;
 import be.objectify.deadbolt.java.actions.SubjectNotPresent;
 import be.objectify.deadbolt.java.actions.SubjectPresent;
-import play.libs.F;
 import play.mvc.Controller;
 import play.mvc.Result;
 import views.html.accessOk;
+
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.CompletionStage;
 
 /**
  * @author Steve Chaloner (steve@objectify.be)
@@ -36,38 +38,38 @@ import views.html.accessOk;
 public class DeferredController extends Controller
 {
     @Restrict(value=@Group("foo"), deferred=true)
-    public F.Promise<Result> deferredRestrict()
+    public CompletionStage<Result> deferredRestrict()
     {
-        return F.Promise.promise(() -> ok(accessOk.render()));
+        return CompletableFuture.completedFuture(ok(accessOk.render()));
     }
 
     @Restrict(value=@Group({"foo", "bar"}), deferred=true)
-    public F.Promise<Result> deferredRestrictions()
+    public CompletionStage<Result> deferredRestrictions()
     {
-        return F.Promise.promise(() -> ok(accessOk.render()));
+        return CompletableFuture.completedFuture(ok(accessOk.render()));
     }
 
     @Pattern(value = "printers.detonate", deferred=true)
-    public F.Promise<Result> deferredPattern()
+    public CompletionStage<Result> deferredPattern()
     {
-        return F.Promise.promise(() -> ok(accessOk.render()));
+        return CompletableFuture.completedFuture(ok(accessOk.render()));
     }
 
     @Dynamic(value="pureLuck", deferred=true)
-    public F.Promise<Result> deferredDynamic()
+    public CompletionStage<Result> deferredDynamic()
     {
-        return F.Promise.promise(() -> ok(accessOk.render()));
+        return CompletableFuture.completedFuture(ok(accessOk.render()));
     }
 
     @SubjectPresent(deferred=true)
-    public F.Promise<Result> deferredSubjectPresent()
+    public CompletionStage<Result> deferredSubjectPresent()
     {
-        return F.Promise.promise(() -> ok(accessOk.render()));
+        return CompletableFuture.completedFuture(ok(accessOk.render()));
     }
 
     @SubjectNotPresent(deferred=true)
-    public F.Promise<Result> deferredSubjectNotPresent()
+    public CompletionStage<Result> deferredSubjectNotPresent()
     {
-        return F.Promise.promise(() -> ok(accessOk.render()));
+        return CompletableFuture.completedFuture(ok(accessOk.render()));
     }
 }

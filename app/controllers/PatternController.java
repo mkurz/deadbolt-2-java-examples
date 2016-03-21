@@ -15,12 +15,14 @@
  */
 package controllers;
 
-import be.objectify.deadbolt.java.models.PatternType;
 import be.objectify.deadbolt.java.actions.Pattern;
-import play.libs.F;
+import be.objectify.deadbolt.java.models.PatternType;
 import play.mvc.Controller;
 import play.mvc.Result;
 import views.html.accessOk;
+
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.CompletionStage;
 
 /**
  * @author Steve Chaloner (steve@objectify.be)
@@ -28,20 +30,20 @@ import views.html.accessOk;
 public class PatternController extends Controller
 {
     @Pattern("printers.edit")
-    public F.Promise<Result> editPrinter()
+    public CompletionStage<Result> editPrinter()
     {
-        return F.Promise.promise(() -> ok(accessOk.render()));
+        return CompletableFuture.completedFuture(ok(accessOk.render()));
     }
 
     @Pattern("printers.detonate")
-    public F.Promise<Result> detonatePrinter()
+    public CompletionStage<Result> detonatePrinter()
     {
-        return F.Promise.promise(() -> ok(accessOk.render()));
+        return CompletableFuture.completedFuture(ok(accessOk.render()));
     }
 
     @Pattern(value = "(.)*\\.edit", patternType = PatternType.REGEX)
-    public F.Promise<Result> editPrinterRegex()
+    public CompletionStage<Result> editPrinterRegex()
     {
-        return F.Promise.promise(() -> ok(accessOk.render()));
+        return CompletableFuture.completedFuture(ok(accessOk.render()));
     }
 }

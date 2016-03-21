@@ -17,10 +17,12 @@ package controllers;
 
 import be.objectify.deadbolt.java.actions.Dynamic;
 import be.objectify.deadbolt.java.actions.SubjectPresent;
-import play.libs.F;
 import play.mvc.Controller;
 import play.mvc.Result;
 import views.html.accessOk;
+
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.CompletionStage;
 
 /**
  * @author Steve Chaloner (steve@objectify.be)
@@ -28,26 +30,26 @@ import views.html.accessOk;
 @SubjectPresent
 public class DynamicRestrictionsController extends Controller
 {
-    public F.Promise<Result> index()
+    public CompletionStage<Result> index()
     {
-        return F.Promise.promise(() -> ok(accessOk.render()));
+        return CompletableFuture.completedFuture(ok(accessOk.render()));
     }
 
     @Dynamic("pureLuck")
-    public F.Promise<Result> pureLuck()
+    public CompletionStage<Result> pureLuck()
     {
-        return F.Promise.promise(() -> ok(accessOk.render()));
+        return CompletableFuture.completedFuture(ok(accessOk.render()));
     }
 
     @Dynamic(value = "pureLuck", handlerKey = "altHandler")
-    public F.Promise<Result> noWayJose()
+    public CompletionStage<Result> noWayJose()
     {
-        return F.Promise.promise(() -> ok(accessOk.render()));
+        return CompletableFuture.completedFuture(ok(accessOk.render()));
     }
 
     @Dynamic(value = "viewProfile")
-    public F.Promise<Result> viewProfile(final String userName)
+    public CompletionStage<Result> viewProfile(final String userName)
     {
-        return F.Promise.promise(() -> ok(accessOk.render()));
+        return CompletableFuture.completedFuture(ok(accessOk.render()));
     }
 }

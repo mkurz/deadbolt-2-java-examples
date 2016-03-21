@@ -17,43 +17,44 @@ package controllers;
 
 import be.objectify.deadbolt.java.actions.SubjectNotPresent;
 import be.objectify.deadbolt.java.actions.SubjectPresent;
-import play.libs.F;
 import play.mvc.Controller;
 import play.mvc.Result;
-import security.NoUserDeadboltHandler;
 import views.html.accessOk;
+
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.CompletionStage;
 
 /**
  * @author Steve Chaloner (steve@objectify.be)
  */
 public class SubjectController extends Controller
 {
-    public F.Promise<Result> index()
+    public CompletionStage<Result> index()
     {
-        return F.Promise.promise(() -> ok(accessOk.render()));
+        return CompletableFuture.completedFuture(ok(accessOk.render()));
     }
 
     @SubjectPresent
-    public F.Promise<Result> subjectPresent()
+    public CompletionStage<Result> subjectPresent()
     {
-        return F.Promise.promise(() -> ok(accessOk.render()));
+        return CompletableFuture.completedFuture(ok(accessOk.render()));
     }
 
     @SubjectPresent(handlerKey = "noUserHandler")
-    public F.Promise<Result> subjectPresent_notLoggedIn()
+    public CompletionStage<Result> subjectPresent_notLoggedIn()
     {
-        return F.Promise.promise(() -> ok(accessOk.render()));
+        return CompletableFuture.completedFuture(ok(accessOk.render()));
     }
 
     @SubjectNotPresent(handlerKey = "noUserHandler")
-    public F.Promise<Result> subjectNotPresent()
+    public CompletionStage<Result> subjectNotPresent()
     {
-        return F.Promise.promise(() -> ok(accessOk.render()));
+        return CompletableFuture.completedFuture(ok(accessOk.render()));
     }
 
     @SubjectNotPresent
-    public F.Promise<Result> subjectNotPresent_loggedIn()
+    public CompletionStage<Result> subjectNotPresent_loggedIn()
     {
-        return F.Promise.promise(() -> ok(accessOk.render()));
+        return CompletableFuture.completedFuture(ok(accessOk.render()));
     }
 }

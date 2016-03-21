@@ -18,10 +18,12 @@ package controllers;
 import be.objectify.deadbolt.java.actions.Group;
 import be.objectify.deadbolt.java.actions.Restrict;
 import be.objectify.deadbolt.java.actions.Unrestricted;
-import play.libs.F;
 import play.mvc.Controller;
 import play.mvc.Result;
 import views.html.accessOk;
+
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.CompletionStage;
 
 /**
  *
@@ -30,14 +32,14 @@ import views.html.accessOk;
 @Restrict(@Group("hurdy"))
 public class UnrestrictedController extends Controller
 {
-    public F.Promise<Result> index()
+    public CompletionStage<Result> index()
     {
-        return F.Promise.promise(() -> ok(accessOk.render()));
+        return CompletableFuture.completedFuture(ok(accessOk.render()));
     }
 
     @Unrestricted
-    public F.Promise<Result> unrestrictedWithinAConstrainedController()
+    public CompletionStage<Result> unrestrictedWithinAConstrainedController()
     {
-        return F.Promise.promise(() -> ok(accessOk.render()));
+        return CompletableFuture.completedFuture(ok(accessOk.render()));
     }
 }

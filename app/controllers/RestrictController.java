@@ -19,11 +19,13 @@ import actions.CustomRestrict;
 import actions.RoleGroup;
 import be.objectify.deadbolt.java.actions.Group;
 import be.objectify.deadbolt.java.actions.Restrict;
-import play.libs.F;
 import play.mvc.Controller;
 import play.mvc.Result;
 import security.MyRoles;
 import views.html.accessOk;
+
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.CompletionStage;
 
 /**
  * @author Steve Chaloner (steve@objectify.be)
@@ -32,55 +34,55 @@ import views.html.accessOk;
         @Group("bar")})
 public class RestrictController extends Controller
 {
-    public F.Promise<Result> index()
+    public CompletionStage<Result> index()
     {
-        return F.Promise.promise(() -> ok(accessOk.render()));
+        return CompletableFuture.completedFuture(ok(accessOk.render()));
     }
 
     @Restrict({@Group({"foo", "bar"})})
-    public F.Promise<Result> restrictOne()
+    public CompletionStage<Result> restrictOne()
     {
-        return F.Promise.promise(() -> ok(accessOk.render()));
+        return CompletableFuture.completedFuture(ok(accessOk.render()));
     }
 
     @Restrict({@Group({"hurdy", "gurdy"}), @Group("foo")})
-    public F.Promise<Result> restrictTwo()
+    public CompletionStage<Result> restrictTwo()
     {
-        return F.Promise.promise(() -> ok(accessOk.render()));
+        return CompletableFuture.completedFuture(ok(accessOk.render()));
     }
 
     @Restrict({@Group("foo"), @Group("!bar")})
-    public F.Promise<Result> restrictThree()
+    public CompletionStage<Result> restrictThree()
     {
-        return F.Promise.promise(() -> ok(accessOk.render()));
+        return CompletableFuture.completedFuture(ok(accessOk.render()));
     }
 
     @Restrict(@Group({"hurdy", "foo"}))
-    public F.Promise<Result> restrictFour()
+    public CompletionStage<Result> restrictFour()
     {
-        return F.Promise.promise(() -> ok(accessOk.render()));
+        return CompletableFuture.completedFuture(ok(accessOk.render()));
     }
 
     @Restrict(@Group({"foo", "!bar"}))
-    public F.Promise<Result> restrictFive()
+    public CompletionStage<Result> restrictFive()
     {
-        return F.Promise.promise(() -> ok(accessOk.render()));
+        return CompletableFuture.completedFuture(ok(accessOk.render()));
     }
 
 
     @CustomRestrict(value = {@RoleGroup({MyRoles.foo, MyRoles.bar}),
                              @RoleGroup(MyRoles.hurdy)},
                     config = @Restrict({}))
-    public F.Promise<Result> customRestrictOne()
+    public CompletionStage<Result> customRestrictOne()
     {
-        return F.Promise.promise(() -> ok(accessOk.render()));
+        return CompletableFuture.completedFuture(ok(accessOk.render()));
     }
 
     @CustomRestrict(value = {@RoleGroup({MyRoles.hurdy, MyRoles.foo}),
                              @RoleGroup({MyRoles.hurdy, MyRoles.bar})},
                     config = @Restrict({}))
-    public F.Promise<Result> customRestrictTwo()
+    public CompletionStage<Result> customRestrictTwo()
     {
-        return F.Promise.promise(() -> ok(accessOk.render()));
+        return CompletableFuture.completedFuture(ok(accessOk.render()));
     }
 }
