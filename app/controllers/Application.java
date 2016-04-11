@@ -1,8 +1,8 @@
 package controllers;
 
 import models.AuthorisedUser;
-import play.libs.F;
 import play.mvc.Controller;
+import play.mvc.Http;
 import play.mvc.Result;
 
 import views.html.index;
@@ -14,7 +14,13 @@ public class Application extends Controller
 {
     public CompletionStage<Result> index()
     {
+        final Http.Context current = Http.Context.current();
         return CompletableFuture.supplyAsync(() -> AuthorisedUser.findByUserName("steve"))
-                                .thenApply(user -> ok(index.render(user)));
+                                .thenApply(user -> {
+                                    // filthy hack to get around the missing context issue
+                                    // todo: steve: better: add a context parameter to the template constraints
+                                    Http.Context.current.set(current);
+                                    return ok(index.render(user));
+                                });
     }
 }
